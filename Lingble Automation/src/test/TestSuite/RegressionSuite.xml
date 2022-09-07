@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Full_Regression" parallel="classes" thread-count="1">
+    <listeners>
+        <listener class-name="framework.listener.TestCaseReporter"></listener>
+        <listener class-name="framework.listener.ScreenshotListener"></listener>
+    </listeners>
+    <test name="LogIn Regression Test">
+        <parameter name="module" value="LogInLogOutTest"></parameter>
+        <parameter name="browser" value="chrome"></parameter>
+        <parameter name="runasheadless" value="yes"></parameter>
+        <classes>
+            <class name="LogInLogOutTest"></class>
+        </classes>
+    </test>
+</suite>
