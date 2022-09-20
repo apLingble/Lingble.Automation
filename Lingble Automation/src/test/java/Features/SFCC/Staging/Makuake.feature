@@ -83,52 +83,6 @@ Feature: Smoke test for Makuake
       | stg         | makuake | AU           | Australia    | VISA/MASTER    | P@ss12345 |
 
 
-  @RemoveProduct
-  Scenario Outline: Successful removal of products from cart
-    Given This user has "<partner>" url of selected "<environment>"
-    Then Navigate to ApplicationURL
-    And Get the url then validate if it is contains demandware
-    Then Close newsletter form
-    And Accept cookies
-    When Age consent for ecchiTokyo showed click yes
-    Then Set to desire country "<country_code>" "<country_name>"
-    And Search for product name "<partner>"
-    Then Select for item details "<partner>"
-    And Add to cart
-    Then validate minicart item "<partner>"
-    And Remove item from minicart
-    And Search for second product name "<partner>"
-    Then Select for second item details "<partner>"
-    Then Add to cart
-    And validate cart page item "<partner>"
-    Then Remove item from cart
-
-    Examples:
-      | environment | partner | country_code | country_name   |
-      | stg         | makuake | GB           | United Kingdom |
-
-
-  @EditProductInCart
-  Scenario Outline: Successfully edited the product details in cart.
-    Given This user has "<partner>" url of selected "<environment>"
-    Then Navigate to ApplicationURL
-    And Get the url then validate if it is contains demandware
-    Then Close newsletter form
-    And Accept cookies
-    When Age consent for ecchiTokyo showed click yes
-    Then Set to desire country "<country_code>" "<country_name>"
-    Then Search for product name "<partner>"
-    Then Select for item details "<partner>"
-    And Add to cart
-    Then validate minicart item "<partner>"
-    Then validate cart page item "<partner>"
-    And Edit products in cart "<partner>"
-
-    Examples:
-      | environment | partner | country_code | country_name   |
-      | stg         | makuake | GB           | United Kingdom |
-
-
   @STAGING_PAGE_NAVIGATION
   Scenario Outline: Successfull navigation through the site.
     Given This user has "<partner>" url of selected "<environment>"

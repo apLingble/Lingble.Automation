@@ -68,7 +68,7 @@ public class LingbleLinkFulfillment extends BaseStepsDefinitions {
     }
 
     @And("Validate order number.")
-    public void validateOrderNumber(String orderNumber){
+    public void validateOrderNumber(){
         lingbleLinkKeyword.validateOrderNumber(apiRequestKeyword.getOrderNumberFulfillment());
     }
 

@@ -195,6 +195,10 @@ public class StagingGenericSteps extends BaseStepsDefinitions {
     public void editCart(String partner){
         cartKeyword.editProductInCart(partner);
     }
+    @Then("Edit products in cart page magento{string}")
+    public void editProductsInCartPageMagento(String partner) {
+        cartKeyword.editProductInCart_magento(partner);
+    }
 
     //----> For navigating through the site
     @And("Validate {string} Social Media Links")
@@ -225,6 +229,10 @@ public class StagingGenericSteps extends BaseStepsDefinitions {
     public void filterProducts(String partner) {
         pageNavigationKeyword.applyFilter(partner);
     }
+    @And("Add to cart for makuake")
+    public void addToCartForMakuake(){
+        CreateOrderKeyword.AddToCartMakuake();
+    }
 
     @Then("Validate DNS Certificate validity")
     public void validateDNSCertificateValidity() {
@@ -233,6 +241,26 @@ public class StagingGenericSteps extends BaseStepsDefinitions {
             SLLChecker.validateDNSExpiration(env);
         }
 
+    }
+
+    @And("Remove item from cart - Magento")
+    public void removeItemFromCartMagento() {
+        cartKeyword.removeItemFromCart_Magento();
+    }
+
+    @And("Allow cookies")
+    public void allowCookies() {
+        homeKeyword.allowCookies();
+    }
+
+    @And("Close newsletter form - Magento")
+    public void closeNewsletterFormMagento() {
+        homeKeyword.closeNewsLetter_magento();
+    }
+
+    @And("Validate product images and price for each categories.")
+    public void validateProductImagesAndPriceForCategories(){
+        pageNavigationKeyword.ValidatePriceImgEachCategory();
     }
 }
 

@@ -100,8 +100,8 @@ Feature: Smoke test for Haku Clothing
     And Search for second product name "<partner>"
     Then Select for second item details "<partner>"
     Then Add to cart
-    And validate cart page item "<partner>"
-    Then Remove item from cart
+    And validate cart page second item "<partner>"
+    And Remove second item from cart
 
     Examples:
       | environment | partner | country_code | country_name   |

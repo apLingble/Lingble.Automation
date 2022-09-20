@@ -3,7 +3,7 @@ Feature: Smoke Test for Xlarge
 
 #  CREATE ORDER TEST
   @Xlarge @Smoke
-  Scenario Outline: User should navigate to category tabs
+  Scenario Outline: User should be able to create an order.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -23,12 +23,12 @@ Feature: Smoke Test for Xlarge
 #    Payment Methods: JCB, VISA/MASTER, PayPal, AMEX/DINERS/DISCOVER
 #    Country: US | United States, GB | United Kingdom, CA | Canada
     Examples:
-      | environment | partner    | country_code | country_name     | payment_method |
-      | stg         | xlarge   | US           | United States    | PayPal         |
+      | environment | partner | country_code | country_name  | payment_method       |
+      | stg         | xlarge  | US           | United States | AMEX/DINERS/DISCOVER |
 
 #  CREATE ORDER FOR MULTIPLE ITEMS
   @Xlarge @Smoke
-  Scenario Outline: User should navigate to category tabs
+  Scenario Outline: User should be able to create multiple orders.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -51,12 +51,12 @@ Feature: Smoke Test for Xlarge
 #    Payment Methods: JCB, VISA/MASTER, PayPal, AMEX/DINERS/DISCOVER
 #    Country: US | United States, GB | United Kingdom, CA | Canada
     Examples:
-      | environment | partner    | country_code | country_name     | payment_method |
-      | stg         | xlarge  | GB           | United Kingdom   | PayPal         |
+      | environment | partner | country_code | country_name   | payment_method |
+      | stg         | xlarge  | GB           | United Kingdom | PayPal         |
 
 #  ADD PRODUCT FROM WISHLIST TO CART
   @Xlarge @Smoke
-  Scenario Outline: User should add to cart item from wishlist
+  Scenario Outline: User should be able to create an order from wish list.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -81,8 +81,38 @@ Feature: Smoke Test for Xlarge
 #    Payment Methods: JCB, VISA/MASTER, PayPal, AMEX/DINERS/DISCOVER
 #    Country: US | United States, GB | United Kingdom, CA | Canada
     Examples:
-      | environment | partner    | country_code | country_name | payment_method | password  |
-      | stg         | xlarge   | AU           | Australia    | PayPal         | P@ss12345 |
+      | environment | partner | country_code | country_name | payment_method | password  |
+      | stg         | xlarge  | CA            | Canada       | VISA/MASTER    | P@ss12345 |
+
+
+#  ADD PRODUCT FROM WISHLIST TO CART
+  @Attachment @SmokeTest
+    @AddToCartFromWishlist
+  Scenario Outline: User should add to cart item from wishlist
+    Given This user has "<partner>" url of selected "<environment>"
+    Then Navigate to ApplicationURL
+    And Get the url then validate if it is contains demandware
+    Then Close newsletter form
+    And Accept cookies
+    When Age consent for ecchiTokyo showed click yes
+    Then Set to desire country "<country_code>" "<country_name>"
+    And Open login account
+    Then validate account landing page
+    And Login user account "<country_code>" "<password>"
+    Then Proceed to login
+    And click minicart
+    Then Check cart if empty or not "<partner>"
+    Then click checkout
+    And Enter shipping details "<country_code>"
+    Then Validate order summary
+    And Enter checkout billing details "<payment_method>" "<country_code>"
+    Then Validate order receipt
+    And validate order number in LL
+
+    #WISHLIST PAYMENT METHOD (VISA/MASTER, JCB)
+    Examples:
+      | environment | partner | country_code | country_name | payment_method | password  |
+      | stg         | xlarge  | CA           | Canada       | JCB            | P@ss12345 |
 
 #  REMOVE PRODUCT FROM CART
   @Xlarge @Smoke
@@ -102,11 +132,11 @@ Feature: Smoke Test for Xlarge
     And Search for second product name "<partner>"
     Then Select for second item details "<partner>"
     Then Add to cart
-    And validate cart page item "<partner>"
-    Then Remove item from cart
+    And validate cart page second item "<partner>"
+    Then Remove second item from cart
     Examples:
-      | environment | partner    | country_code | country_name   |
-      | stg         | xlarge | GB           | United Kingdom |
+      | environment | partner | country_code | country_name   |
+      | stg         | xlarge  | GB           | United Kingdom |
 
 #  EDIT PRODUCT FROM CART
   @Xlarge @Smoke
@@ -125,8 +155,8 @@ Feature: Smoke Test for Xlarge
     Then validate cart page item "<partner>"
     And Edit products in cart "<partner>"
     Examples:
-      | environment | partner    | country_code | country_name   |
-      | stg         | xlarge | GB           | United Kingdom |
+      | environment | partner | country_code | country_name   |
+      | stg         | xlarge  | GB           | United Kingdom |
 
 #  PAGE NAVIGATION
   @Xlarge @Smoke
@@ -148,8 +178,8 @@ Feature: Smoke Test for Xlarge
     And Validate product image from product details
     And Navigate through item details "<partner>"
     Examples:
-      | environment | partner    | country_code | country_name   |
-      | stg         | xlarge | GB           | United Kingdom |
+      | environment | partner | country_code | country_name   |
+      | stg         | xlarge  | GB           | United Kingdom |
 
 #  USER CREATION
   @Xlarge @Smoke
@@ -172,8 +202,8 @@ Feature: Smoke Test for Xlarge
     And User must be able to proceed to profile page
     Then User must be able to log out
     Examples:
-      | environment | partner    |
-      | stg         | xlarge   |
+      | environment | partner |
+      | stg         | xlarge  |
 
 #  USER LOGIN LOGOUT
   @Xlarge @Smoke
@@ -190,8 +220,8 @@ Feature: Smoke Test for Xlarge
     And User must be able to proceed to profile page
     And User must be able to log out
     Examples:
-      | environment | partner    |
-      | stg         | xlarge   |
+      | environment | partner |
+      | stg         | xlarge  |
 
 #    FULFILLMENT
   @Xlarge @Smoke
@@ -212,5 +242,5 @@ Feature: Smoke Test for Xlarge
     And Validate if order status is completed.
     And Validate if fulfillment status is fulfilled.
     Examples:
-      | partner    |
-      | xlarge   |
+      | partner |
+      | xlarge  |

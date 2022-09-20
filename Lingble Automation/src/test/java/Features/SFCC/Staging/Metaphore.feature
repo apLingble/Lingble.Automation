@@ -3,7 +3,7 @@ Feature: Smoke Test for Metaphore
 
 #  CREATE ORDER TEST
   @Metaphore @Smoke
-  Scenario Outline: User should navigate to category tabs
+  Scenario Outline: User should be able to create an order.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -23,12 +23,12 @@ Feature: Smoke Test for Metaphore
 #    Payment Methods: JCB, VISA/MASTER, PayPal, AMEX/DINERS/DISCOVER
 #    Country: US | United States, GB | United Kingdom, CA | Canada
     Examples:
-      | environment | partner    | country_code | country_name     | payment_method |
-      | stg         | metaphore   | US           | United States    | PayPal         |
+      | environment | partner   | country_code | country_name  | payment_method       |
+      | stg         | metaphore | US           | United States | AMEX/DINERS/DISCOVER |
 
 #  CREATE ORDER FOR MULTIPLE ITEMS
   @Metaphore @Smoke
-  Scenario Outline: User should navigate to category tabs
+  Scenario Outline: User should be able to create multiple orders.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -56,7 +56,7 @@ Feature: Smoke Test for Metaphore
 
 #  ADD PRODUCT FROM WISHLIST TO CART
   @Metaphore @Smoke
-  Scenario Outline: User should add to cart item from wishlist
+  Scenario Outline: User should be able to create an order from wish list.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -81,8 +81,8 @@ Feature: Smoke Test for Metaphore
 #    Payment Methods: JCB, VISA/MASTER, PayPal, AMEX/DINERS/DISCOVER
 #    Country: US | United States, GB | United Kingdom, CA | Canada
     Examples:
-      | environment | partner    | country_code | country_name | payment_method | password  |
-      | stg         | metaphore   | AU           | Australia    | PayPal         | P@ss12345 |
+      | environment | partner   | country_code | country_name | payment_method | password  |
+      | stg         | metaphore | AU           | Australia    | VISA/MASTER    | P@ss12345 |
 
 #  REMOVE PRODUCT FROM CART
   @Metaphore @Smoke
@@ -102,10 +102,10 @@ Feature: Smoke Test for Metaphore
     And Search for second product name "<partner>"
     Then Select for second item details "<partner>"
     Then Add to cart
-    And validate cart page item "<partner>"
-    Then Remove item from cart
+    And validate cart page second item "<partner>"
+    And Remove second item from cart
     Examples:
-      | environment | partner    | country_code | country_name   |
+      | environment | partner   | country_code | country_name   |
       | stg         | metaphore | GB           | United Kingdom |
 
 #  EDIT PRODUCT FROM CART
@@ -125,7 +125,7 @@ Feature: Smoke Test for Metaphore
     Then validate cart page item "<partner>"
     And Edit products in cart "<partner>"
     Examples:
-      | environment | partner    | country_code | country_name   |
+      | environment | partner   | country_code | country_name   |
       | stg         | metaphore | GB           | United Kingdom |
 
 #  PAGE NAVIGATION
@@ -148,7 +148,7 @@ Feature: Smoke Test for Metaphore
     And Validate product image from product details
     And Navigate through item details "<partner>"
     Examples:
-      | environment | partner    | country_code | country_name   |
+      | environment | partner   | country_code | country_name   |
       | stg         | metaphore | GB           | United Kingdom |
 
 #  USER CREATION
@@ -172,8 +172,8 @@ Feature: Smoke Test for Metaphore
     And User must be able to proceed to profile page
     Then User must be able to log out
     Examples:
-      | environment | partner    |
-      | stg         | metaphore   |
+      | environment | partner   |
+      | stg         | metaphore |
 
 #  USER LOGIN LOGOUT
   @Metaphore @Smoke
@@ -190,8 +190,8 @@ Feature: Smoke Test for Metaphore
     And User must be able to proceed to profile page
     And User must be able to log out
     Examples:
-      | environment | partner    |
-      | stg         | metaphore   |
+      | environment | partner   |
+      | stg         | metaphore |
 
 #    FULFILLMENT
   @Metaphore @Smoke
@@ -212,5 +212,5 @@ Feature: Smoke Test for Metaphore
     And Validate if order status is completed.
     And Validate if fulfillment status is fulfilled.
     Examples:
-      | partner    |
-      | metaphore   |
+      | partner   |
+      | metaphore |

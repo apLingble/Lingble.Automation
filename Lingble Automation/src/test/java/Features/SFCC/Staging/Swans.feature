@@ -3,7 +3,7 @@ Feature: Smoke Test for Swans
 
 #  CREATE ORDER TEST
   @Swans @Smoke
-  Scenario Outline: User should navigate to category tabs
+  Scenario Outline: User should be able to create an order.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -24,11 +24,11 @@ Feature: Smoke Test for Swans
 #    Country: US | United States, GB | United Kingdom, CA | Canada
     Examples:
       | environment | partner    | country_code | country_name     | payment_method |
-      | stg         | swans   | US           | United States    | PayPal         |
+      | stg         | swans   | US           | United States    | AMEX/DINERS/DISCOVER        |
 
 #  CREATE ORDER FOR MULTIPLE ITEMS
   @Swans @Smoke
-  Scenario Outline: User should navigate to category tabs
+  Scenario Outline: User should be able to create multiple orders.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -56,7 +56,7 @@ Feature: Smoke Test for Swans
 
 #  ADD PRODUCT FROM WISHLIST TO CART
   @Swans @Smoke
-  Scenario Outline: User should add to cart item from wishlist
+  Scenario Outline: User should be able to create an order from wish list.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -82,7 +82,7 @@ Feature: Smoke Test for Swans
 #    Country: US | United States, GB | United Kingdom, CA | Canada
     Examples:
       | environment | partner    | country_code | country_name | payment_method | password  |
-      | stg         | swans   | AU           | Australia    | PayPal         | P@ss12345 |
+      | stg         | swans   | AU           | Australia    | VISA/MASTER        | P@ss12345 |
 
 #  REMOVE PRODUCT FROM CART
   @Swans @Smoke
@@ -102,8 +102,8 @@ Feature: Smoke Test for Swans
     And Search for second product name "<partner>"
     Then Select for second item details "<partner>"
     Then Add to cart
-    And validate cart page item "<partner>"
-    Then Remove item from cart
+    And validate cart page second item "<partner>"
+    And Remove second item from cart
     Examples:
       | environment | partner    | country_code | country_name   |
       | stg         | swans | GB           | United Kingdom |

@@ -2,6 +2,7 @@ package StepDefinitions;
 
 import framework.commonFunctions.commonHelper;
 import framework.environment.BaseStepsDefinitions;
+import io.cucumber.core.gherkin.Step;
 import io.cucumber.java.*;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -23,8 +24,8 @@ public class CreateUserUserSignUp extends BaseStepsDefinitions {
         TearDown(scenario);
     }
     @AfterStep
-    public void afterStep() throws Throwable {
-        commonHelper.takeScreenshot();
+    public void afterStep(Scenario scenario) throws Throwable {
+        commonHelper.takeScreenshot(scenario);
     }
     @When("User navigate to account creation details")
     public void userNavigateToAccountCreationDetails() {

@@ -9,9 +9,7 @@ public class CheckOutPage extends BasePageObject<CheckOutPage>{
         super(driver, log);
     }
 
-    protected By count_loc_addNewButton = By.xpath("//a[contains(@class,'btn-add-new') and normalize-space()='Add New']");
     protected By loc_addNewButton = By.xpath("//a[contains(@class,'btn-add-new') and normalize-space()='Add New'] | //a[normalize-space()='Add New']");
-    protected By cartCheckoutButton = By.xpath("//a[normalize-space(@class)='btn btn-primary btn-block checkout-btn'] | //div[contains(@class,'totals')]//a[normalize-space(@class)='btn btn-primary btn-block checkout-btn']");
     protected By loc_guestCheckoutButton = By.xpath("//a[@class='btn btn-block btn-primary checkout-as-guest']");
     protected By loc_loginEmail = By.xpath("//input[@name='loginEmail'] | //label[@for='login-form-email']//following-sibling::input[@name='loginEmail']");
     protected By loc_loginPassword = By.xpath("//input[@name='loginPassword']");
@@ -21,31 +19,16 @@ public class CheckOutPage extends BasePageObject<CheckOutPage>{
     protected By loc_lastName = By.id("shippingLastNamedefault");
     protected By loc_shippingAddress = By.id("shippingAddressOnedefault");
     public By setCountry(String country) { return By.xpath("//li[contains(text(),'"+country+"')]"); }
-    //    protected By countryDropDown = By.id("select2-shippingCountrydefault-container");
     protected By loc_countryDropDown = By.xpath("//select[@name='dwfrm_shipping_shippingAddress_addressFields_country'] | //select[@id='shippingCountrydefault']");
     protected By loc_stateDropDown = By.id("shippingStateSelect");
-    public By loc_setState(String state) { return By.xpath("//select[@id='shippingStateSelect']//option[@id='"+state+"']"); }
     protected By loc_shippingCity = By.id("shippingAddressCitydefault");
     protected By loc_shippingZipcode = By.id("shippingZipCodedefault");
     protected By loc_phoneNumber = By.id("shippingPhoneNumberdefault");
     protected By loc_nextPaymentButton = By.xpath("//button[@value='submit-shipping']");
-    protected By loc_payment_method_text = By.xpath("//label[normalize-space()='Payment Method']");
     protected By loc_billingEmail = By.xpath("//input[@id='email' and @name='dwfrm_billing_contactInfoFields_email'] | //input[@name='dwfrm_billing_contactInfoFields_email']");
-//    public By loc_paymentRadioButton(String paymentMethod){
-//        return By.xpath("//label[contains(text(),'"+paymentMethod+"')]//preceding-sibling::input");
-//    }
-    public By loc_paymentRadioButton(String paymentMethod){
-        return By.xpath("//li[@class='paymentMethod']//input[@value='"+paymentMethod+"']");
-    }
-    protected By loc_amexDinnersDiscover_radio_button = By.xpath("//input[@value='stripe_card']");
-    protected By loc_visaMaster_radio_button = By.xpath("//input[@value='paypal_card']");
-    protected By loc_jcb_radio_button = By.xpath("//input[@value='scheme']");
-
-    //    public By loc_paymentRadioButton(String paymentMethod){
-//        return By.xpath("//img[contains(@src,'"+paymentMethod+"')]");
-//    }
-    protected By loc_ccIframeElement = By.xpath("//iframe[@title='Iframe for secured card data input field']");
-    protected By loc_selectedCountry = By.xpath("//span[@class='country-name']");
+    protected By loc_amex_radio_button = By.xpath("//input[@value='stripe_card']");
+    protected By loc_visa_OR_master_radio_button = By.xpath("//input[@value='paypal_card']");
+    protected By loc_jcb_OR_diner_OR_discover_radio_button = By.xpath("//input[@value='scheme']");
     protected By ageCheck = By.xpath("(//input[@id='age-check'])[1]");
 
 

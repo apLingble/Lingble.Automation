@@ -129,8 +129,8 @@ Feature: Production Test for Haku
     When Chat widget open minimize it
     Then Set to desire country "<country_code>" "<country_name>"
     And Validate "<partner>" Social Media Links
+    And Validate product images and price for each categories.
     And Navigate to category tabs
-    And Validate product prices and images
     And Filter Products "<partner>"
     And Sort Products
     And Select an item from the product list

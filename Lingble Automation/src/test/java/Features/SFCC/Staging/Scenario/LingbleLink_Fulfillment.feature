@@ -3,7 +3,7 @@ Feature: As as user I must be able to login in the lingble link site, select par
 
   @LogIn
   Scenario Outline: An order number has been successfully fulfilled.
-    Given Open Lingble Link "<partnerSite>" LoginPage.
+    Given Open Lingble Link "<partner>" LoginPage.
     When User enters valid credentials.
     And User clicks log in button.
     Then Wait for LL Page to be ready.
@@ -20,8 +20,25 @@ Feature: As as user I must be able to login in the lingble link site, select par
     And Validate if fulfillment status is fulfilled.
 
     Examples:
-      | partnerSite |
-      | tanuki |
-
+      | environment | partner    |
+      | stg         | ace        |
+      | stg         | attachment |
+      | stg         | briefing   |
+      | stg         | dnd        |
+      | stg         | ecchi      |
+      | stg         | haku       |
+      | stg         | igc        |
+      | stg         | kokuyo     |
+      | stg         | mago       |
+      | stg         | makuake    |
+      | stg         | maruzeki   |
+      | stg         | metaphore  |
+      | stg         | swans      |
+      | stg         | talex      |
+      | stg         | tanuki     |
+      | stg         | tatras     |
+      | stg         | toot       |
+      | stg         | xgirl      |
+      | stg         | xlarge     |
 
 

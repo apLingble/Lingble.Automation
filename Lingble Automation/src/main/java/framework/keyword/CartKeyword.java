@@ -246,7 +246,7 @@ public class CartKeyword extends CartPage {
 
     public void attachment_cartPage_validation(String product){
         validate_cartPage_product(product);
-        validate_cartPage_productColor_attachment(product)
+        validate_cartPage_productColor_attachment(product);
         validate_cartPage_productSize(product);
     }
     public void ace__cartPage_validation(String product){
@@ -367,18 +367,30 @@ public class CartKeyword extends CartPage {
         log.info("Expected product type: " + productType + " is visible in the cart page.");
     }
     public void validate_cartPage_productFrameColor(String product){
-        String productName = System.getProperty(product+"productName");
-        String productFrameColor = System.getProperty(product+"productFrameColor").replaceAll("[^a-zA-Z0-9]", " ");
-
-        waitForWebElementVisibility(cartPage_productFrameColor(productName, productFrameColor));
-        log.info("Expected product frame color: " + productFrameColor + " is visible in the cart page.");
+        String US_productColor = System.getProperty(product+"US_productFrameColor");
+        String productColor = System.getProperty(product+"productFrameColor").replaceAll("[^a-zA-Z0-9]", " ");
+        String get_currentURL = driver.getCurrentUrl().toString();
+        log.info(get_currentURL);
+        if (get_currentURL.contains("en_US")) {
+            waitForWebElementVisibility(cartPage_productColor(productName, US_productColor));
+            log.info("Expected product frame color: " + US_productColor + " is visible in the cart page.");
+        }else{
+            waitForWebElementVisibility(cartPage_productColor(productName, productColor));
+            log.info("Expected product frame color: " + productColor + " is visible in the cart page.");
+        }
     }
     public void validate_cartPage_productLensesColor(String product){
-        String productName = System.getProperty(product+"productName");
-        String productLensesColor = System.getProperty(product+"productLensesColor").replaceAll("[^a-zA-Z0-9]", " ");
-
-        waitForWebElementVisibility(cartPage_productLensesColor(productName, productLensesColor));
-        log.info("Expected product lenses color: " + productLensesColor + " is visible in the cart page.");
+        String US_productColor = System.getProperty(product+"US_productLensesColor");
+        String productColor = System.getProperty(product+"productLensesColor").replaceAll("[^a-zA-Z0-9]", " ");
+        String get_currentURL = driver.getCurrentUrl().toString();
+        log.info(get_currentURL);
+        if (get_currentURL.contains("en_US")) {
+            waitForWebElementVisibility(cartPage_productColor(productName, US_productColor));
+            log.info("Expected product lenses color: " + US_productColor + " is visible in the cart page.");
+        }else{
+            waitForWebElementVisibility(cartPage_productColor(productName, productColor));
+            log.info("Expected product lenses color: " + productColor + " is visible in the cart page.");
+        }
     }
     public void validate_cartPage_productWashType(String product){
         String productName = System.getProperty(product+"productName");
@@ -495,6 +507,30 @@ public class CartKeyword extends CartPage {
             }
         }
     }
+    public void viewCart_magento() {
+        log.info("View cart");
+        waitForWebElementToBeClickAble(loc_viewCart_magento, 10);
+        click(loc_viewCart_magento);
+        log.info("View cart, clicked.");
+    }
+    public void minicart_magento(){
+        log.info("Minicart");
+        waitForWebElementToBeClickAble(loc_minicart_magento, 10);
+        scrollToTop(loc_minicart_magento);
+        click(loc_minicart_magento);
+        log.info("Minicart, clicked.");
+    }
+    public void cart_pencinIcon_magento() {
+        log.info("Edit pencil icon");
+        waitForWebElementToBeClickAble(loc_editIcon_magento_magento, 10);
+        click(loc_editIcon_magento_magento);
+    }
+    public void update_button_magento() {
+        log.info("Update button");
+        waitForWebElementToBeClickAble(loc_update_button_magento, 10);
+        click(loc_update_button_magento);
+        log.info("Update button, clicked.");
+    }
 
     //----> FOR REMOVING PRODUCTS FROM CART
 
@@ -572,12 +608,20 @@ public class CartKeyword extends CartPage {
         selectEditItemDetails(partner);
         validateUpdatedItemDetails();
     }
+    public void editProductInCart_magento(String partner){
+        log.info("Editing product details in cart...");
+        log.info("Select new item details.");
+        selectEditItemDetails_magento(partner);
+    }
     private void selectEditItemDetails(String partner){
         updateDetails(partner);
         waitForWebElementToBeClickAble(updateButton, 10);
         click(updateButton);
         log.info("Update button is clicked.");
         selectNewQuantity();
+    }
+    private void selectEditItemDetails_magento(String partner){
+        updateDetails(partner);
     }
     private void selectNewQuantity(){
         log.info("Set the quantity in cart to one.");
@@ -622,6 +666,9 @@ public class CartKeyword extends CartPage {
         itemDetails.put("toot", this::toot_updateDetails);
         itemDetails.put("xgirl", this::xgirl_updateDetails);
         itemDetails.put("xlarge", this::xlarge_updateDetails);
+        itemDetails.put("japanblue", this::japan_updateDetails);
+        itemDetails.put("knifan", this::knifan_updateDetails);
+        itemDetails.put("momotaro", this::momotaro_updateDetails);
 
         itemDetails.get(partner.toLowerCase()).run();
     }
@@ -705,6 +752,30 @@ public class CartKeyword extends CartPage {
         select_ProductSize();
         select_QtyUsingIcon();
     }
+    private void momotaro_updateDetails() {
+        minicart_magento();
+        viewCart_magento();
+        cart_pencinIcon_magento();
+        edit_productSize_magento();
+        update_button_magento();
+    }
+
+    private void knifan_updateDetails() {
+        log.info("NO SELECTION DETAILS");
+    }
+
+    private void japan_updateDetails() {
+        minicart_magento();
+        viewCart_magento();
+        cart_pencinIcon_magento();
+        edit_productColor_magento();
+        edit_productSize_magento();
+        update_button_magento();
+        edit_productQuantity_magento();
+        update_button_magento();
+        validate_updated_qty_magento();
+    }
+
 
     /** methods for selecting item details...............Note: can be use to other partner * */
 
@@ -797,6 +868,24 @@ public class CartKeyword extends CartPage {
         }
     }
 
+    public void edit_productColor_magento(){
+        log.info("Update product color");
+        waitForWebElementToBeClickAble(loc_edit_productColor_magento(productColor));
+        click(loc_edit_productColor_magento(productColor));
+        log.info(productColor + " Is selected");
+    }
+    public void edit_productSize_magento(){
+        log.info("Update product size");
+        waitForWebElementToBeClickAble(loc_edit_productSize_magento(productSize));
+        click(loc_edit_productSize_magento(productSize));
+        log.info(productSize + " Is selected");
+    }
+    public void edit_productQuantity_magento(){
+        log.info("Update product quanity");
+        clear(loc_edit_quantity_magento);
+        type(productQuantity ,loc_edit_quantity_magento);
+        log.info(productSize + " Is selected");
+    }
 
     //-----> TWO TYPES OF ADDING/SELECTING QUANTITY
     public void select_QtyUsingDropdown(){
@@ -868,6 +957,8 @@ public class CartKeyword extends CartPage {
             log.info("Lenses color: " + productLensesColor + " is selected.");
         }
     }
+
+
     // Methods for checking the cart if empty or not
     public void check_cartIfEmpty_orNot(String partner, String product){
         if (elementCount(loc_get_cartItemsCount) == 0){
@@ -887,13 +978,7 @@ public class CartKeyword extends CartPage {
             }else{
                 log.info("No Popover minicart found, validation skipped");
             }
-
             waitUntilPageready();
-//            log.info("Click Checkout Button");
-//            moveTo(CheckoutButton);
-//            waitForElementToBeVisible(CheckoutButton, 1000);
-//            click(CheckoutButton);
-
         }else{
             log.info("CART IS EMPTY");
             userIcon_userlogin();
@@ -915,10 +1000,6 @@ public class CartKeyword extends CartPage {
             }
 
             waitUntilPageready();
-//            log.info("Click Checkout Button");
-//            moveTo(CheckoutButton);
-//            waitForElementToBeVisible(CheckoutButton, 1000);
-//            click(CheckoutButton);
         }
 
     }
@@ -980,4 +1061,32 @@ public class CartKeyword extends CartPage {
         return elementCount(loc_count_email_texbox);
     }
 
+    public void removeItemFromCart_Magento() {
+        log.info("Remove item in cart");
+        sleep(Duration.ofSeconds(5));
+        String partnerSite = System.getProperty("partnerSite");
+        if (partnerSite.equals("Japan Blue") | partnerSite.equals("Momotaro")){
+            moveTo(cartMagento);
+            click(cartMagento);
+            waitForElementToBeVisible(viewCartMagento,5);
+            click(viewCartMagento);
+            waitForElementToBeVisible(removeIconMagento, 15);
+            click(removeIconMagento);
+            waitForElementToBeVisible(validateEmptyCartMagento, 5);
+        } else if (partnerSite.equals("Knifan")){
+            waitForElementToBeVisible(removeIconMagento, 3);
+            click(removeIconMagento);
+            waitForElementToBeVisible(validateEmptyCartMagento, 5);
+        }
+    }
+    public void validate_updated_qty_magento(){
+        waitUntilPageready();
+        String test = findWeb(loc_validate_updated_qty(productQuantity)).getAttribute("value").toString();
+        log.info(test);
+        String test1 = productQuantity;
+        log.info(test1);
+        sleep(Duration.ofSeconds(3));
+        waitForElementToBeVisible(loc_validate_updated_qty(productQuantity), 10);
+        Assert.assertEquals(productQuantity, productQuantity);
+    }
 }

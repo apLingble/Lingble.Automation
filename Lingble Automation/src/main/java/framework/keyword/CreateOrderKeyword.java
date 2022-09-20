@@ -27,7 +27,7 @@ public class CreateOrderKeyword extends CreateOrderPage {
         String partnerSite = System.getProperty("partnerSite");
         String productName = System.getProperty(product+"productName");
 
-        if(partnerSite.equals("Talex")){
+        if(partnerSite.equals("Talex") | partnerSite.equals("Momotaro Jeans") | partnerSite.equals("Japan Blue Jeans") | partnerSite.equals("Knifan")){
 //            ((JavascriptExecutor)driver).executeScript("window.scrollBy(0,-500)");
             waitForWebElementToBeClickAble(loc_searchIconMagento,5);
             click(loc_searchIconMagento);
@@ -61,12 +61,26 @@ public class CreateOrderKeyword extends CreateOrderPage {
     }
 
      public void AddToCartButton(){
-        moveTo(loc_AddToCartButton);
+        waitUntilPageready();
+        scrollToElement(loc_AddToCartButton);
         waitForWebElementToBeClickAble(loc_AddToCartButton, 3);
-        click(loc_AddToCartButton);
+        clickElementJS(loc_AddToCartButton);
         log.info("Add button clicked.");
         waitUntilPageready();
 
+    }
+
+    public void AddToCartMakuake() {
+        log.info("Adding products...");
+        sleep(Duration.ofSeconds(3));
+        if(elementCount(imgCarousel)>=1)
+        {
+            click(closeImg);
+            click(preOrderButton);
+            moveTo(optionButton);
+            waitForElementToBeVisible(optionButton, 3);
+            click(optionButton);
+        }
     }
 
 

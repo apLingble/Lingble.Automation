@@ -63,8 +63,8 @@ public class mapHelper {
         multiKeyMap.put("igc","production","production/igc");
         multiKeyMap.put("mago","prod","production/mago");
         multiKeyMap.put("mago","production","production/mago");
-        multiKeyMap.put("makauke","prod","production/makauke");
-        multiKeyMap.put("makauke","production","production/makauke");
+        multiKeyMap.put("makuake","prod","production/makuake");
+        multiKeyMap.put("makuake","production","production/makuake");
         multiKeyMap.put("metaphore","prod","production/metaphore");
         multiKeyMap.put("metaphore","production","production/metaphore");
         multiKeyMap.put("maruzeki","prod","production/maruzeki");
@@ -91,6 +91,8 @@ public class mapHelper {
         multiKeyMap.put("samurai","production","production/samurai");
         multiKeyMap.put("japanblue","prod","production/japanblue");
         multiKeyMap.put("japanblue","production","production/japanblue");
+        multiKeyMap.put("knifan","prod","production/knifan");
+        multiKeyMap.put("knifan","production","production/knifan");
         return multiKeyMap.get(partner,environment).toString();
     }
 }

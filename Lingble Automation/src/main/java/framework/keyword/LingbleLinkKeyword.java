@@ -27,54 +27,56 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
 
     public void waitUntilLingblePageready(){
         log.info("Wait for LingbleLink to load.");
-        waitForElementToBeVisible(lingbleLinkLogo, 2000);
+        waitForElementToBeVisible(lingbleLinkLogo, 10);
     }
 
     public void enterLLEmail(){
         log.info("Enter email.");
-        waitForElementToBeVisible(LLEmailLogInField, 2000);
+        waitForElementToBeVisible(LLEmailLogInField, 20);
         String LLemail = System.getProperty(ConfigurationKeyEnum.lingbleLinkEmail.value());
         type(LLemail, LLEmailLogInField);
     }
 
     public void enterLLPassword(){
         log.info("Enter Password.");
-        waitForElementToBeVisible(LLPasswordLogInField, 2000);
+        waitForElementToBeVisible(LLPasswordLogInField, 20);
         String LLpassword = System.getProperty(ConfigurationKeyEnum.lingbleLinkPassword.value());
         type(LLpassword, LLPasswordLogInField);
     }
 
     public void proceedToLoginLL(){
         log.info("Click log in button.");
-        waitForWebElementToBeClickAble(lingbleLogInButton, 2000);
+        waitForWebElementToBeClickAble(lingbleLogInButton, 20);
         click(lingbleLogInButton);
     }
 
     public void waitForLLPageToBeReady() {
         log.info("Wait for LL Page to be ready.");
-        waitForElementToBeVisible(lingbleLinkLogo, 5000);
+        waitForElementToBeVisible(lingbleLinkLogo, 50);
     }
 
     public void selectOrderListMenu(){
-        waitForElementToBeVisible(orderMenuButton, 5000);
+        waitForElementToBeVisible(orderMenuButton, 50);
         click(orderMenuButton);
         log.info("Order list menu is selected.");
-        waitForElementToBeVisible(orderlistLabel, 3000);
+        waitForElementToBeVisible(orderlistLabel, 50);
     }
 
     public void selectPartnerSite(){
         String partnersite = System.getProperty(ConfigurationKeyEnum.partnerSite.value());
         log.info("Select partnersite "+partnersite+".");
-        waitForElementToBeVisible(kebabMenu, 3000);
+        waitForElementToBeVisible(kebabMenu, 30);
         click(kebabMenu);
-        waitForElementToBeVisible(partnerSiteList, 3000);
+        sleep(Duration.ofSeconds(5));
+        moveTo(setPartnerSite(partnersite));
+        waitForElementToBeVisible(partnerSiteList, 20);
         click(setPartnerSite(partnersite));
-        sleep(Duration.ofSeconds(10));
+        sleep(Duration.ofSeconds(5));
     }
 
     public void validateSelectedPartnerSite(){
         String partnersite= System.getProperty(ConfigurationKeyEnum.partnerSite.value());
-        waitForElementToBeVisible(setPartnerSiteLabel(partnersite), 5000);
+        waitForElementToBeVisible(setPartnerSiteLabel(partnersite), 20);
         log.info("Selected partner site "+partnersite+" is displayed.");
         sleep(Duration.ofSeconds(3));
     }
@@ -88,7 +90,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
      }
      **/
     public void setOrderListFilter(String orderNumber){
-        log.info("Set filters for order number");
+        log.info("Set filters for order number "+orderNumber);
         clickFilterButton();
         validateFilterWindow();
         typeOrderNumber(orderNumber);
@@ -102,13 +104,13 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
     }
 
     public void clickFirstOrderNumber() {
-        waitForWebElementToBeClickAble(orderNumberInList, 5000);
+        waitForWebElementToBeClickAble(orderNumberInList, 20);
         if(elementCount(orderNumberInList)!=1){
             log.info("Order number is not found.");
             throw new RuntimeException("There's no oder number to be selected!");
         }
         else{
-            waitForWebElementToBeClickAble(orderNumberInList, 5000);
+            waitForWebElementToBeClickAble(orderNumberInList, 20);
             if(elementCount(customerIDAlexander)>0){
                 log.info("Customer ID Alexander is verified.");
                 click(orderNumberInList);
@@ -123,14 +125,13 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
         }
     }
 
-    public void validateOrderNumber(String orderNumber) {
+    public void validateOrderNumber(String order_number) {
         log.info("Validating order number");
-
-        String selectedOrderNumber = getText(getOrderNumber).substring(8,21);
-
-        if (selectedOrderNumber.equals(orderNumber)){
-            log.info("Order number (API): " + orderNumber + "");
-            log.info("Selected order number: " +selectedOrderNumber+ "");
+        int count = order_number.length() + 8;
+        String selectedOrderNumber = getText(getOrderNumber).substring(8,count);
+        log.info("Order number (API): " + order_number + "");
+        log.info("Selected order number: " +selectedOrderNumber+ "");
+        if (selectedOrderNumber.equals(order_number)){
             log.info("Order number is successfully validated!");
         } else throw new Error("Order number validation error!");
     }
@@ -153,7 +154,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
 
     //Set Order list filter.
     private void clickFilterButton(){
-        waitForElementToBeVisible(filterButton, 2000);
+        waitForElementToBeVisible(filterButton, 20);
         click(filterButton);
         sleep(Duration.ofSeconds(3));
         if (elementCount(filterWindow)!=1){
@@ -163,17 +164,17 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
 
     }
     private void validateFilterWindow(){
-        waitForElementToBeVisible(filterWindow, 2000);
+        waitForElementToBeVisible(filterWindow, 5);
         log.info("Filter window is displayed.");
     }
     private void typeOrderNumber(String orderNumber){
-        waitForElementToBeVisible(orderNumberInput,2000);
+        waitForElementToBeVisible(orderNumberInput,10);
         click(orderNumberInput);
         type(orderNumber, orderNumberInput);
         log.info("Order number is typed successfully.");
     }
     private void typeCustomerID(){
-        waitForElementToBeVisible(customerIdFilter, 2000);
+        waitForElementToBeVisible(customerIdFilter, 10);
         if (elementCount(customerIdFilter)!=1){
             log.info("Customer ID input is found");
         }
@@ -182,7 +183,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
         log.info("String successfully typed.");
     }
     private void selectFilterType(){
-        waitForElementToBeVisible(filtertype, 2000);
+        waitForElementToBeVisible(filtertype, 10);
         if (elementCount(filtertype)!=1){
             log.info("Filter Type Element is not found");
         }
@@ -191,7 +192,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
         log.info("Filter type button is clicked");
     }
     private void setPaymentStatus(){
-        waitForElementToBeVisible(paymentStatusFilter, 2000);
+        waitForElementToBeVisible(paymentStatusFilter, 10);
         if (elementCount(paymentStatusFilter)!=1){
             log.info("Payment status filter is not found.");
         }
@@ -199,7 +200,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
         log.info("Payment Status option is clicked.");
     }
     private void setAdditionalFilter(){
-        waitForElementToBeVisible(additionalFilterDropdown, 2000);
+        waitForElementToBeVisible(additionalFilterDropdown, 10);
         if (elementCount(additionalFilterDropdown)!=1){
             log.info("Additional Filter Dropdown is not found.");
         }
@@ -207,7 +208,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
         log.info("Additional Filter Dropdown is clicked.");
     }
     private void selectPaidStatus(){
-        waitForElementToBeVisible(paidFilterOption, 2000);
+        waitForElementToBeVisible(paidFilterOption, 10);
         if (elementCount(paidFilterOption)!=1){
             log.info("Paid filter button is not found.");
         }
@@ -215,7 +216,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
         log.info("Paid Filter is selected.");
     }
     private void clickAddFilter(){
-        waitForElementToBeVisible(addFilter, 2000);
+        waitForElementToBeVisible(addFilter, 10);
         if (elementCount(addFilter)!=1){
             log.info("Add filter button is not found.");
         }
@@ -223,7 +224,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
         log.info("Add Filter is clicked.");
     }
     private void clickApplyFilter(){
-        waitForElementToBeVisible(applyFilter, 2000);
+        waitForElementToBeVisible(applyFilter, 10);
         if (elementCount(applyFilter)!=1){
             log.info("Apply Filter button is not found.");
         }
@@ -234,9 +235,9 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
 
     //For Fulfillment Flow
     private void goToFulfillmentTab(){
-        waitForWebElementToBeClickAble(fulfillmentTab, 2000);
+        waitForWebElementToBeClickAble(fulfillmentTab, 10);
         click(fulfillmentTab);
-        waitForWebElementToBeClickAble(checkbox, 2000);
+        waitForWebElementToBeClickAble(checkbox, 10);
         click(checkbox);
         log.info("Fulfillment Tab and checkbox is clicked.");
     }
@@ -247,7 +248,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
         }
         click(pickedOption);
         log.info("Picked option is clicked.");
-        waitForElementToBeVisible(pickedStatus, 5000);
+        waitForElementToBeVisible(pickedStatus, 10);
     }
     private void setPrepareDocsStatus() {
         click(bulkActions);
@@ -256,7 +257,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
         }
         click(prepareDocsOption);
         log.info("Prepare Docs option is clicked.");
-        waitForElementToBeVisible(prepareDocsStatus, 5000);
+        waitForElementToBeVisible(prepareDocsStatus, 10);
     }
     private void setPrintAndPackStatus() {
         click(bulkActions);
@@ -265,7 +266,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
         }
         click(printAndPackOption);
         log.info("Print and pack option is clicked.");
-        waitForElementToBeVisible(printAndPackWindow, 5000);
+        waitForElementToBeVisible(printAndPackWindow, 10);
         sleep(Duration.ofSeconds(5));
         waitForWebElementToBeClickAble(selectAllOption);
         waitForWebElementToBeClickAble(packingSlipOption);
@@ -281,7 +282,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
         }
         click(setAsPrintedOption);
         log.info("Set as printed option is clicked.");
-        waitForElementToBeVisible(docsPrintedStatus, 5000);
+        waitForElementToBeVisible(docsPrintedStatus, 10);
     }
     private void setShippedOrderStatus() {
         click(bulkActions);
@@ -290,13 +291,13 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
         }
         click(shipOption);
         log.info("Ship option is clicked.");
-        waitForElementToBeVisible(shippedStatus, 5000);
+        waitForElementToBeVisible(shippedStatus, 10);
     }
 
     //Validate Order and Fulfillment Status
     public void validateOrderStatus(){
         sleep(Duration.ofSeconds(3));
-        waitForElementToBeVisible(orderStatus,3000);
+        waitForElementToBeVisible(orderStatus,10);
         if (elementCount(orderStatus)!=1){
             log.info("Order Status not completed!");
             throw new RuntimeException("Order Status should be completed!");
@@ -306,7 +307,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
     }
     public void validateFulfillmentStatus(){
         sleep(Duration.ofSeconds(3));
-        waitForElementToBeVisible(fulfillmentStatus, 3000);
+        waitForElementToBeVisible(fulfillmentStatus, 10);
         if (elementCount(fulfillmentStatus)!=1){
             log.info("Fulfillment Status not completed!");
             throw new RuntimeException("Order should be fulfilled!");
@@ -329,15 +330,15 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
         else log.info("Payment Status is paid.");
     }
     private void ifPaymentIsNotPaid() {
-        waitForWebElementToBeClickAble(fulfillmentTab, 2000);
+        waitForWebElementToBeClickAble(fulfillmentTab, 10);
         click(fulfillmentTab);
         sleep(Duration.ofSeconds(3));
-        waitForElementToBeVisible(meatballsMenu, 1000);
+        waitForElementToBeVisible(meatballsMenu, 10);
         click(meatballsMenu);
-        waitForWebElementToBeClickAble(markAsPaidOption, 2000);
+        waitForWebElementToBeClickAble(markAsPaidOption, 10);
         click(markAsPaidOption);
-        waitForElementToBeVisible(setAsPaid, 2000);
-        waitForWebElementToBeClickAble(yesButton, 2000);
+        waitForElementToBeVisible(setAsPaid, 10);
+        waitForWebElementToBeClickAble(yesButton, 10);
         click(yesButton);
     }
     private void countNotPaidStatus() {
@@ -349,7 +350,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
 
     //For checking no location assigned in inventory source.
     public void checkNoLocationAssigned(){
-        waitForWebElementToBeClickAble(fulfillmentTab, 2000);
+        waitForWebElementToBeClickAble(fulfillmentTab, 10);
         click(fulfillmentTab);
         sleep(Duration.ofSeconds(3));
         if(elementCount(inventorySource)!=1){
@@ -359,7 +360,7 @@ public class LingbleLinkKeyword extends LingbleLinkPage {
             log.info("Inventory source has No Location Assigned.");
             driver.navigate().refresh();
             waitForLLPageToBeReady();
-            waitForWebElementToBeClickAble(fulfillmentTab, 2000);
+            waitForWebElementToBeClickAble(fulfillmentTab, 10);
             click(fulfillmentTab);
             sleep(Duration.ofSeconds(3));
             if(Objects.equals(getText(inventorySource), "No Location Assigned ")){

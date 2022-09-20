@@ -1,10 +1,16 @@
 #@author: Alexander Pangilinan
-Feature: As a user I must be able to validate DNS certificate.
+Feature: Product Images and Prices should be displayed properly.
 
-  @Production @Smoke
-  Scenario Outline: Successful dns certificate validation.
+  @ValidateCategories
+  Scenario Outline: Product Images and Prices should be displayed properly.
     Given This user has "<partner>" url of selected "<environment>"
-    Then Validate DNS Certificate validity
+    Then Navigate to ApplicationURL
+    Then Close newsletter form
+    And Accept cookies
+    When Age consent for ecchiTokyo showed click yes
+    When Chat widget open minimize it
+    And Validate product images and price for each categories.
+
 
     Examples:
       | environment | partner    |
@@ -14,10 +20,9 @@ Feature: As a user I must be able to validate DNS certificate.
       | prod        | dnd        |
       | prod        | ecchi      |
       | prod        | haku       |
-      | prod        | igc        |
       | prod        | kokuyo     |
+      | prod        | igc        |
       | prod        | mago       |
-      | prod        | makuake    |
       | prod        | maruzeki   |
       | prod        | metaphore  |
       | prod        | swans      |

@@ -12,7 +12,12 @@ public class HomePage extends BasePageObject<HomePage> {
     protected HomePage(WebDriver driver, Logger log) {
         super(driver, log);
     }
-    protected By AgreeButton= By.xpath("//button[normalize-space()='Agree']");
+    protected By AgreeButton = By.xpath("//button[normalize-space()='Agree']");
+    //MAGENTO
+    protected By loc_allowCookies = By.xpath("//button[normalize-space()='Allow Cookies']");
+    protected By loc_popup_box = By.xpath("//div[@class='hld-pop newspopup_clear']");
+    protected By loc_closeNewsletter_magento = By.xpath("//div[@class='cross close']");
+
     protected By DisagreeButton = By.xpath("//button[@title='Disagree' and @class='reject btn btn-outline-dark btn-action btn-sm']");
     protected By XButton = By.xpath("//button[@class='accept btn btn-action']");
     protected By CustomerCareLabel = By.xpath("//h2[normalize-space()='Customer Care']");
@@ -68,7 +73,6 @@ public class HomePage extends BasePageObject<HomePage> {
     public By Dropdown5 (int index){
         return By.xpath("(//a[@class='current-country dropdown-toggle']//span[@class='country-name'])["+index+"]");
     }
-
     protected By CartButton = By.xpath("//div[contains(@class,'minicart')]//a[contains(@class,'minicart-link')]");
     protected By CheckoutButton = By.xpath("//a[normalize-space(@class)='btn btn-primary btn-block checkout-btn'] | //div[contains(@class,'totals')]//a[normalize-space(@class)='btn btn-primary btn-block checkout-btn']");
 }

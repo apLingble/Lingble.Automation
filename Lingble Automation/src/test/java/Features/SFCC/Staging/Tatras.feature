@@ -3,7 +3,7 @@ Feature: Smoke Test for Tatras
 
 #  CREATE ORDER TEST
   @Tatras @Smoke
-  Scenario Outline: User should navigate to category tabs
+  Scenario Outline: User should be able to create an order.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -23,12 +23,14 @@ Feature: Smoke Test for Tatras
 #    Payment Methods: JCB, VISA/MASTER, PayPal, AMEX/DINERS/DISCOVER
 #    Country: US | United States, GB | United Kingdom, CA | Canada
     Examples:
-      | environment | partner    | country_code | country_name     | payment_method |
-      | stg         | tatras   | US           | United States    | PayPal         |
+      | environment | partner | country_code | country_name  | payment_method       |
+      | stg         | tatras  | US           | United States | AMEX/DINERS/DISCOVER |
+
+
 
 #  CREATE ORDER FOR MULTIPLE ITEMS
   @Tatras @Smoke
-  Scenario Outline: User should navigate to category tabs
+  Scenario Outline: User should be able to create multiple orders.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -51,12 +53,12 @@ Feature: Smoke Test for Tatras
 #    Payment Methods: JCB, VISA/MASTER, PayPal, AMEX/DINERS/DISCOVER
 #    Country: US | United States, GB | United Kingdom, CA | Canada
     Examples:
-      | environment | partner    | country_code | country_name     | payment_method |
-      | stg         | tatras  | GB           | United Kingdom   | PayPal         |
+      | environment | partner | country_code | country_name   | payment_method |
+      | stg         | tatras  | GB           | United Kingdom | PayPal         |
 
 #  ADD PRODUCT FROM WISHLIST TO CART
   @Tatras @Smoke
-  Scenario Outline: User should add to cart item from wishlist
+  Scenario Outline: User should be able to create an order from wish list.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -81,8 +83,38 @@ Feature: Smoke Test for Tatras
 #    Payment Methods: JCB, VISA/MASTER, PayPal, AMEX/DINERS/DISCOVER
 #    Country: US | United States, GB | United Kingdom, CA | Canada
     Examples:
-      | environment | partner    | country_code | country_name | payment_method | password  |
-      | stg         | tatras   | AU           | Australia    | PayPal         | P@ss12345 |
+      | environment | partner | country_code | country_name | payment_method | password  |
+      | stg         | tatras  | AU           | Australia    | VISA/MASTER    | P@ss12345 |
+
+
+#  ADD PRODUCT FROM WISHLIST TO CART
+  @Attachment @SmokeTest
+    @AddToCartFromWishlist
+  Scenario Outline: User should add to cart item from wishlist
+    Given This user has "<partner>" url of selected "<environment>"
+    Then Navigate to ApplicationURL
+    And Get the url then validate if it is contains demandware
+    Then Close newsletter form
+    And Accept cookies
+    When Age consent for ecchiTokyo showed click yes
+    Then Set to desire country "<country_code>" "<country_name>"
+    And Open login account
+    Then validate account landing page
+    And Login user account "<country_code>" "<password>"
+    Then Proceed to login
+    And click minicart
+    Then Check cart if empty or not "<partner>"
+    Then click checkout
+    And Enter shipping details "<country_code>"
+    Then Validate order summary
+    And Enter checkout billing details "<payment_method>" "<country_code>"
+    Then Validate order receipt
+    And validate order number in LL
+
+    #WISHLIST PAYMENT METHOD (VISA/MASTER, JCB)
+    Examples:
+      | environment | partner | country_code | country_name | payment_method | password  |
+      | stg         | tatras  | AU           | Australia    | JCB            | P@ss12345 |
 
 #  REMOVE PRODUCT FROM CART
   @Tatras @Smoke
@@ -102,11 +134,12 @@ Feature: Smoke Test for Tatras
     And Search for second product name "<partner>"
     Then Select for second item details "<partner>"
     Then Add to cart
-    And validate cart page item "<partner>"
-    Then Remove item from cart
+    And validate cart page second item "<partner>"
+    And Remove second item from cart
     Examples:
-      | environment | partner    | country_code | country_name   |
-      | stg         | tatras | GB           | United Kingdom |
+      | environment | partner | country_code | country_name   |
+      | stg         | tatras  | GB           | United Kingdom |
+
 
 #  EDIT PRODUCT FROM CART
   @Tatras @Smoke
@@ -125,8 +158,9 @@ Feature: Smoke Test for Tatras
     Then validate cart page item "<partner>"
     And Edit products in cart "<partner>"
     Examples:
-      | environment | partner    | country_code | country_name   |
-      | stg         | tatras | GB           | United Kingdom |
+      | environment | partner | country_code | country_name   |
+      | stg         | tatras  | GB           | United Kingdom |
+
 
 #  PAGE NAVIGATION
   @Tatras @Smoke
@@ -148,8 +182,9 @@ Feature: Smoke Test for Tatras
     And Validate product image from product details
     And Navigate through item details "<partner>"
     Examples:
-      | environment | partner    | country_code | country_name   |
-      | stg         | tatras | GB           | United Kingdom |
+      | environment | partner | country_code | country_name   |
+      | stg         | tatras  | GB           | United Kingdom |
+
 
 #  USER CREATION
   @Tatras @Smoke
@@ -173,7 +208,8 @@ Feature: Smoke Test for Tatras
     Then User must be able to log out
     Examples:
       | environment | partner    |
-      | stg         | tatras   |
+      | stg         | tatras     |
+
 
 #  USER LOGIN LOGOUT
   @Tatras @Smoke
@@ -191,7 +227,8 @@ Feature: Smoke Test for Tatras
     And User must be able to log out
     Examples:
       | environment | partner    |
-      | stg         | tatras   |
+      | stg         | tatras     |
+
 
 #    FULFILLMENT
   @Tatras @Smoke
@@ -213,4 +250,4 @@ Feature: Smoke Test for Tatras
     And Validate if fulfillment status is fulfilled.
     Examples:
       | partner    |
-      | tatras   |
+      | tatras     |

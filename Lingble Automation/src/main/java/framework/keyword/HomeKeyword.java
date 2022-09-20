@@ -71,7 +71,7 @@ public class HomeKeyword extends HomePage {
 
     public void waitForHomepage() {
         log.info("Wait for home page to load.");
-        waitForElementToBeVisible(HomePageLogo, 2000);
+        waitForElementToBeVisible(HomePageLogo, 30);
     }
 
     public void acceptCookies() {
@@ -86,6 +86,33 @@ public class HomeKeyword extends HomePage {
             }
         } catch (Exception e) {
 
+        }
+    }
+    public void allowCookies(){
+        try {
+            log.info("Allow cookies.");
+            if (elementCount(loc_allowCookies) > 0){
+                waitForWebElementToBeClickAble(loc_allowCookies, 5);
+                scrollToElement(loc_allowCookies);
+                click(loc_allowCookies);
+                log.info("Cookies accepted.");
+                sleep(Duration.ofSeconds(1));
+            }
+        } catch (Exception e) {
+
+        }
+    }
+    public void closeNewsLetter_magento(){
+        waitUntilPageready();
+        log.info("Close newsletter");
+        if (elementCount(loc_popup_box) > 0){
+            waitForWebElementToBeClickAble(loc_popup_box, 10);
+            click(loc_popup_box);
+        }
+        if (elementCount(loc_closeNewsletter_magento) > 0){
+            waitForWebElementToBeClickAble(loc_closeNewsletter_magento, 10);
+            click(loc_closeNewsletter_magento);
+            log.info("Newsletter is closed");
         }
     }
 
@@ -169,23 +196,22 @@ public class HomeKeyword extends HomePage {
     public void moveMouseToCart() {
         log.info("User must be able move or hover to cart");
         moveTo(CartButton);
-        waitForElementToBeVisible(CartButton, 50);
+        waitForWebElementToBeClickAble(CartButton, 10);
     }
 
     public void viewCart() {
-        log.info("User must be able to view cart");
+        log.info("View cart");
         sleep(Duration.ofMillis(1500));
         moveTo(CartButton);
-        waitForElementToBeVisible(CartButton, 1000);
+        waitForWebElementToBeClickAble(CartButton, 10);
         click(CartButton);
-
     }
 
     public void logOutUser() {
         log.info("Logging out the account...");
         for (int i = 1; i <= getElement(LogOutButton).size(); i++) {
             try {
-                waitForElementToBeVisible(LogOutButton(i), 30);
+                waitForWebElementToBeClickAble(LogOutButton(i), 30);
                 click(LogOutButton(i));
                 waitForHomepage();
                 log.info("Logged out successfully!");
@@ -300,7 +326,7 @@ public class HomeKeyword extends HomePage {
     public void clickCheckoutButton() {
         log.info("Click Checkout Button");
         moveTo(CheckoutButton);
-        waitForElementToBeVisible(CheckoutButton, 1000);
+        waitForElementToBeVisible(CheckoutButton, 180);
         click(CheckoutButton);
     }
 }

@@ -3,10 +3,9 @@ Feature: Production Test for Ace
 
 #  CREATE ORDER TEST
   @Ace @Production
-  Scenario Outline: User should navigate to category tabs
+  Scenario Outline: User should be able to create an order
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
-    When Age consent for ecchiTokyo showed click yes
     Then Close newsletter form
     And Accept cookies
     When Chat widget open minimize it
@@ -22,12 +21,11 @@ Feature: Production Test for Ace
 
 #  CREATE ORDER FOR MULTIPLE
   @Ace @Production
-  Scenario Outline: User should navigate to category tabs
+  Scenario Outline:  User should be able to create multiple order
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     Then Close newsletter form
     And Accept cookies
-    When Age consent for ecchiTokyo showed click yes
     When Chat widget open minimize it
     Then Set to desire country "<country_code>" "<country_name>"
     Then Search for product name "<partner>"
@@ -44,12 +42,11 @@ Feature: Production Test for Ace
 
 #  MOVE PRODUCT TO WISHLIST
   @Ace @Production
-  Scenario Outline: User should move product to wishlist
+  Scenario Outline: User should be able to move product to wishlist
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     Then Close newsletter form
     And Accept cookies
-    When Age consent for ecchiTokyo showed click yes
     When Chat widget open minimize it
     Then Set to desire country "<country_code>" "<country_name>"
     Then Search for product name "<partner>"
@@ -71,7 +68,6 @@ Feature: Production Test for Ace
     Then Navigate to ApplicationURL
     Then Close newsletter form
     And Accept cookies
-    When Age consent for ecchiTokyo showed click yes
     When Chat widget open minimize it
     Then Set to desire country "<country_code>" "<country_name>"
     And Search for product name "<partner>"
@@ -82,8 +78,8 @@ Feature: Production Test for Ace
     And Search for second product name "<partner>"
     Then Select for second item details "<partner>"
     Then Add to cart
-    And validate cart page item "<partner>"
-    Then Remove item from cart
+    And validate cart page second item "<partner>"
+    Then Remove second item from cart
     Examples:
       | environment | partner    | country_code | country_name   |
       | prod        | ace   | PH           | Philippines    |
@@ -95,7 +91,6 @@ Feature: Production Test for Ace
     Then Navigate to ApplicationURL
     Then Close newsletter form
     And Accept cookies
-    When Age consent for ecchiTokyo showed click yes
     When Chat widget open minimize it
     Then Set to desire country "<country_code>" "<country_name>"
     Then Search for product name "<partner>"
@@ -113,10 +108,8 @@ Feature: Production Test for Ace
   Scenario Outline: Successful login of user
     Given This user has "<partner>" url of selected "<environment>"
     When Navigate to ApplicationURL
-    And Get the url then validate if it is contains demandware
     And Close newsletter form
     And Accept cookies
-    When Age consent for ecchiTokyo showed click yes
     And User navigate to account creation details
     And User enters email and password
     And User click login button
@@ -133,12 +126,11 @@ Feature: Production Test for Ace
     Then Navigate to ApplicationURL
     Then Close newsletter form
     And Accept cookies
-    When Age consent for ecchiTokyo showed click yes
     When Chat widget open minimize it
     Then Set to desire country "<country_code>" "<country_name>"
     And Validate "<partner>" Social Media Links
+    And Validate product images and price for each categories.
     And Navigate to category tabs
-    And Validate product prices and images
     And Filter Products "<partner>"
     And Sort Products
     And Select an item from the product list
@@ -154,7 +146,6 @@ Feature: Production Test for Ace
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Validate protocol and subdomain
-    When Age consent for ecchiTokyo showed click yes
     Then Close newsletter form
     And Accept cookies
     When Chat widget open minimize it
@@ -172,7 +163,6 @@ Feature: Production Test for Ace
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL 2
     And Validate protocol and subdomain
-    When Age consent for ecchiTokyo showed click yes
     Then Close newsletter form
     And Accept cookies
     When Chat widget open minimize it
@@ -190,7 +180,6 @@ Feature: Production Test for Ace
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL 3
     And Validate protocol and subdomain
-    When Age consent for ecchiTokyo showed click yes
     Then Close newsletter form
     And Accept cookies
     When Chat widget open minimize it
@@ -208,7 +197,6 @@ Feature: Production Test for Ace
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL 4
     And Validate protocol and subdomain
-    When Age consent for ecchiTokyo showed click yes
     Then Close newsletter form
     And Accept cookies
     When Chat widget open minimize it

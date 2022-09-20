@@ -82,8 +82,8 @@ Feature: Production Test for EcchiTokyo
     And Search for second product name "<partner>"
     Then Select for second item details "<partner>"
     Then Add to cart
-    And validate cart page item "<partner>"
-    Then Remove item from cart
+    And validate cart page second item "<partner>"
+    Then Remove second item from cart
     Examples:
       | environment | partner    | country_code | country_name   |
       | prod        | ecchi   | PH           | Philippines    |
@@ -136,8 +136,8 @@ Feature: Production Test for EcchiTokyo
     When Chat widget open minimize it
     Then Set to desire country "<country_code>" "<country_name>"
     And Validate "<partner>" Social Media Links
+    And Validate product images and price for each categories.
     And Navigate to category tabs
-    And Validate product prices and images
     And Filter Products "<partner>"
     And Sort Products
     And Select an item from the product list

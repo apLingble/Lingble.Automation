@@ -6,7 +6,7 @@ Feature: Smoke test for BRIEFING JAPAN
 
   @Briefing @SmokeTest
   @CreateOrderTest
-  Scenario Outline: User should navigate to category tabs
+  Scenario Outline: User should be able to create an order.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -27,9 +27,9 @@ Feature: Smoke test for BRIEFING JAPAN
       | environment | partner  | country_code | country_name  | payment_method       |
       | stg         | briefing | US           | United States | AMEX/DINERS/DISCOVER |
 
-
+  @Briefing @SmokeTest
   @CreateOrderForMultipleItems
-  Scenario Outline: User should navigate to category tabs
+  Scenario Outline: User should be able to create multiple orders.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -54,9 +54,9 @@ Feature: Smoke test for BRIEFING JAPAN
       | environment | partner  | country_code | country_name   | payment_method |
       | stg         | briefing | GB           | United Kingdom | paypal         |
 
-
+  @Briefing @SmokeTest
   @AddToCartFromWishlist
-  Scenario Outline: User should add to cart item from wishlist
+  Scenario Outline: User should be able to create an order from wish list.
     Given This user has "<partner>" url of selected "<environment>"
     Then Navigate to ApplicationURL
     And Get the url then validate if it is contains demandware
@@ -82,7 +82,7 @@ Feature: Smoke test for BRIEFING JAPAN
       | environment | partner  | country_code | country_name | payment_method | password  |
       | stg         | briefing | AU           | Australia    | VISA/MASTER    | P@ss12345 |
 
-
+  @Briefing @SmokeTest
   @RemoveProduct
   Scenario Outline: Successful removal of products from cart
     Given This user has "<partner>" url of selected "<environment>"
@@ -100,14 +100,14 @@ Feature: Smoke test for BRIEFING JAPAN
     And Search for second product name "<partner>"
     Then Select for second item details "<partner>"
     Then Add to cart
-    And validate cart page item "<partner>"
-    Then Remove item from cart
+    And validate cart page second item "<partner>"
+    And Remove second item from cart
 
     Examples:
       | environment | partner  | country_code | country_name   |
       | stg         | briefing | GB           | United Kingdom |
 
-
+  @Briefing @SmokeTest
   @EditProductInCart
   Scenario Outline: Successfully edited the product details in cart.
     Given This user has "<partner>" url of selected "<environment>"
@@ -128,7 +128,7 @@ Feature: Smoke test for BRIEFING JAPAN
       | environment | partner  | country_code | country_name   |
       | stg         | briefing | GB           | United Kingdom |
 
-
+  @Briefing @SmokeTest
   @STAGING_PAGE_NAVIGATION
   Scenario Outline: Successfull navigation through the site.
     Given This user has "<partner>" url of selected "<environment>"
@@ -152,7 +152,7 @@ Feature: Smoke test for BRIEFING JAPAN
       | environment | partner  | country_code | country_name   |
       | stg         | briefing | GB           | United Kingdom |
 
-
+  @Briefing @SmokeTest
   @UserCreation
   Scenario Outline: Successful creation of user account
     Given This user has "<partner>" url of selected "<environment>"
@@ -177,7 +177,7 @@ Feature: Smoke test for BRIEFING JAPAN
       | environment | partner  |
       | stg         | briefing |
 
-
+  @Briefing @SmokeTest
   @AccountManagement
   Scenario Outline: Successful login of user
     Given This user has "<partner>" url of selected "<environment>"
@@ -195,5 +195,28 @@ Feature: Smoke test for BRIEFING JAPAN
     Examples:
       | environment | partner  |
       | stg         | briefing |
+
+  @Briefing @SmokeTest
+    @Fulfillment
+  Scenario Outline: An order number has been successfully fulfilled.
+    Given Open Lingble Link "<partner>" LoginPage.
+    When User enters valid credentials.
+    And User clicks log in button.
+    Then Wait for LL Page to be ready.
+    And Select Order List Menu.
+    And User selects Partner Site.
+    Then validate Selected Partner Site.
+    And User sets the order list filter.
+    Then Get first order number in the list.
+    And Validate order number.
+    And Validate the payment status.
+    Then Check for No Location Assigned.
+    Then User performs the fulfillment flow.
+    And Validate if order status is completed.
+    And Validate if fulfillment status is fulfilled.
+
+    Examples:
+      | partner |
+      | briefing |
 
 

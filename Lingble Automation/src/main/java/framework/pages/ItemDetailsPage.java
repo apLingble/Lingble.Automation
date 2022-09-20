@@ -16,11 +16,13 @@ public class ItemDetailsPage extends BasePageObject<ItemDetailsPage> {
     //LOCATORS FOR SELECTING ITEM DETAILS
 
     //COLOR
+    protected By colorSelected = By.xpath("//div[@class='swatch-option image selected']");
     public By loc_productColor(String ProductColor){
         return By.xpath("//button[@aria-label='Select Color "+ProductColor+"'] |" +
                 "//button[starts-with(@class,'color-attribute') and @data-label='"+ProductColor+"'] |" +
                 "//button[@data-label='"+ProductColor+"'] |" +
-                "//button[starts-with(@class,'color-attribute') and @aria-label='Select Color "+ProductColor+"']");}
+                "//button[starts-with(@class,'color-attribute') and @aria-label='Select Color "+ProductColor+"'] |" +
+                "//div[@option-label='"+ProductColor+"']");}
     public By loc_productColor_dropdown(String ProductColor){
         return By.xpath("//option[@data-attr-value='"+ProductColor+"']");}
     protected By loc_ColorDropdown = By.xpath("//select[contains(@class,'select-color') and contains(@id,'color')]");
@@ -30,7 +32,8 @@ public class ItemDetailsPage extends BasePageObject<ItemDetailsPage> {
     //SIZE
     public By loc_productSize(String ProductSize){
         return By.xpath("//ul[@id='size-list']//li[normalize-space()='"+ProductSize+"'] |" +
-                "//button[@title='Select "+ProductSize+"']");}
+                "//button[@title='Select "+ProductSize+"'] |" +
+                "//div[contains(@aria-label,'"+ProductSize+"')]");}
     protected By loc_sizeDropdown = By.xpath("//select[@id='size-1'] | //select[@class='custom-select form-control select-size']");
 
     //QUANTITY

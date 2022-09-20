@@ -22,23 +22,23 @@ Feature: As as user I must be able to navigate in navigation tabs.
 
 
     Examples:
-      | environment | partner    | country_code | country_name  | payment_method       |
-      | stg         | attachment | US           | United States | AMEX/DINERS/DISCOVER |
-      | stg         | ace        | US           | United States | AMEX/DINERS/DISCOVER |
-      | stg         | briefing   | US           | United States | AMEX/DINERS/DISCOVER |
-      | stg         | dnd        | CA           | Canada        | AMEX/DINERS/DISCOVER |
-      | stg         | ecchi      | US           | United States | AMEX/DINERS/DISCOVER |
-      | stg         | haku       | US           | United States | AMEX/DINERS/DISCOVER |
-      | stg         | igc        | US           | United States | AMEX/DINERS/DISCOVER |
-      | stg         | kokuyo     | US           | United States | AMEX/DINERS/DISCOVER |
-      | stg         | mago       | CA           | Canada        | AMEX/DINERS/DISCOVER |
-      | stg         | makuake    | US           | United States | AMEX/DINERS/DISCOVER |
-      | stg         | maruzeki   | US           | United States | AMEX/DINERS/DISCOVER |
-      | stg         | metaphore  | US           | United States | AMEX/DINERS/DISCOVER |
-      | stg         | swans      | CA           | Canada        | AMEX/DINERS/DISCOVER |
-      | stg         | talex      | CN           | China         | AMEX/DINERS/DISCOVER |
-      | stg         | tanuki     | US           | United States | AMEX/DINERS/DISCOVER |
-      | stg         | tatras     | US           | United States | AMEX/DINERS/DISCOVER |
-      | stg         | toot       | US           | United States | AMEX/DINERS/DISCOVER |
-      | stg         | xgirl      | US           | United States | AMEX/DINERS/DISCOVER |
-      | stg         | xlarge     | US           | United States | AMEX/DINERS/DISCOVER |
+      | environment | partner    | country_code | country_name  | payment_method |
+      | stg         | attachment | US           | United States | AMEX           |
+      | stg         | ace        | US           | United States | AMEX           |
+      | stg         | briefing   | US           | United States | AMEX           |
+      | stg         | dnd        | US           | United States | AMEX           |
+      | stg         | ecchi      | US           | United States | AMEX           |
+      | stg         | haku       | US           | United States | AMEX           |
+      | stg         | igc        | US           | United States | AMEX           |
+      | stg         | kokuyo     | US           | United States | AMEX           |
+      | stg         | mago       | US           | United States | AMEX           |
+      | stg         | makuake    | US           | United States | AMEX           |
+      | stg         | maruzeki   | US           | United States | AMEX           |
+      | stg         | metaphore  | US           | United States | AMEX           |
+      | stg         | swans      | CA           | Canada        | AMEX           |
+      | stg         | talex      | CN           | China         | AMEX           |
+      | stg         | tanuki     | US           | United States | AMEX           |
+      | stg         | tatras     | US           | United States | AMEX           |
+      | stg         | toot       | US           | United States | AMEX           |
+      | stg         | xgirl      | US           | United States | AMEX           |
+      | stg         | xlarge     | US           | United States | AMEX           |

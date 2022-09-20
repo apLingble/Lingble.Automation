@@ -16,7 +16,7 @@ public class CreateOrderPage extends BasePageObject<CreateOrderPage>{
     protected By loc_countSearhIcon = By.xpath("(//div[contains(@class,'search')])[1]");
     protected By loc_searchIcon = By.xpath("(//div[starts-with(@class,'site-search')])[1] | (//img[contains(@alt,'Search')])[2]");
     protected By loc_searchEngine = By.xpath("//form//input[@name='q' and @type='text']");
-    protected By loc_searchProductName = By.xpath("//input[@class='form-control search-field' and @name='q']");
+    protected By loc_searchProductName = By.xpath("//input[@class='form-control search-field' and @name='q'] | //input[@name='q']");
 
     public By loc_suggestionOption1(String productName){
         return By.xpath("(//div[@class='suggestions container']//parent::a[@class='product']//img[starts-with(@alt,\""+productName+"\")])[1]");
@@ -52,4 +52,8 @@ public class CreateOrderPage extends BasePageObject<CreateOrderPage>{
     //LOCATORS LIST FOR ADDING ITEM/PRODUCT TO CART
     protected By loc_AddToCartButton = By.xpath("(//input[@class='add-to-cart-url']//following-sibling::button)[1] | //button[@class='add-to-cart btn btn-primary btn-block'] | //button[normalize-space()='Add to Cart']");
 
+    protected By imgCarousel = By.xpath("//div[@id='pdpCarousel-main']");
+    protected By closeImg = By.xpath("//div[@id='pdpCarousel-main']//descendant::span");
+    protected By preOrderButton = By.xpath("//div[@class='preorder-wrapper']/button[@class='btn btn-block btn-preorder' and text()='Pre-Order']");
+    protected By optionButton = By.xpath("//h3[@class='product-name' and contains(text(), 'Option A')]//following::button[contains(text(),'Pre-order')][1]");
 }

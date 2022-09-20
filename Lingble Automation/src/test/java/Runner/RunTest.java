@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeClass;
 
 @CucumberOptions(features={"src/test/java/Features"}
 					,glue={"StepDefinitions"}
-					,plugin = {"html:target/cucumber-reports/lingble_Automation/cucumber-pretty","json:target/json-cucumber-reports/lingble_Automation/lingbleAutomation.json",
+					,plugin = {"pretty", "html:target/cucumber-reports/lingble_Automation/cucumber-pretty","json:target/json-cucumber-reports/lingble_Automation/lingbleAutomation.json",
 		"testng:target/testng-cucumber-reports/lingble_Automation/lingbleAutomation.xml"}
 					,tags = "@AccountManagement"
 		)

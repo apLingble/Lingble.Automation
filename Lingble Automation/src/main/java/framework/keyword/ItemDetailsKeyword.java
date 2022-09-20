@@ -45,8 +45,25 @@ public class ItemDetailsKeyword extends ItemDetailsPage {
         itemDetails.put("toot", () -> toot_itemDetails(product));
         itemDetails.put("xgirl", () -> xgirl_itemDetails(product));
         itemDetails.put("xlarge", () -> xlarge_itemDetails(product));
+        itemDetails.put("japanblue", () -> japan_itemDetails(product));
+        itemDetails.put("knifan", () -> knifan_itemDetails(product));
+        itemDetails.put("momotaro", () -> momotaro_itemDetails(product));
 
         itemDetails.get(partner.toLowerCase()).run();
+    }
+
+    private void momotaro_itemDetails(String product) {
+        select_ProductColor_Momotaro(product);
+        select_ProductSize(product);
+    }
+
+    private void knifan_itemDetails(String product) {
+        log.info("NO SELECTION DETAILS");
+    }
+
+    private void japan_itemDetails(String product) {
+        select_ProductColor(product);
+        select_ProductSize(product);
     }
 
     public void attachment_itemDetails(String product){
@@ -129,6 +146,17 @@ public class ItemDetailsKeyword extends ItemDetailsPage {
         select_QtyUsingIcon(product);
     }
 
+    public void select_ProductColor_Momotaro(String product){
+        String productColor = System.getProperty(product+"productColor");
+        if (elementCount(colorSelected)==1){
+            log.info("Color: " + productColor + " Selected by default.");
+        }else {
+            sleep(Duration.ofSeconds(1));
+            waitForWebElementToBeClickAble(loc_productColor(productColor), 2);
+            click(loc_productColor(productColor));
+            log.info("Color: " + productColor + " Is selected.");
+        }
+    }
     public void select_ProductColor(String product){
         String productColor = System.getProperty(product+"productColor");
 

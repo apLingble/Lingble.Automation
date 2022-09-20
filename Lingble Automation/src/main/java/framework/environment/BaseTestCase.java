@@ -98,20 +98,14 @@ public class BaseTestCase extends AbstractTestNGSpringContextTests {
 		} catch (Exception e) {
 
 		}
-		for (int y = 1; y <= 5; y++) {
-			String reportDirectory = new File(System.getProperty("user.dir")).getAbsolutePath()
-					+ "/target/surefire-reports" + getPastDateString(y);
-			Path directory = Paths.get(reportDirectory);
-			try {
-				deleteFolderAndItsContent(directory);
-			} catch (IOException e2) {
-			}
-		}
-//		if (runasheadless == null || runasheadless.length() == 0) {
-//			String Drunasheadless = "no";
-//			this.runAsHeadless = Drunasheadless;
-//		} else {
-//			this.runAsHeadless = runasheadless;
+//		for (int y = 1; y <= 5; y++) {
+//			String reportDirectory = new File(System.getProperty("user.dir")).getAbsolutePath()
+//					+ "/target/surefire-reports" + getPastDateString(y);
+//			Path directory = Paths.get(reportDirectory);
+//			try {
+//				deleteFolderAndItsContent(directory);
+//			} catch (IOException e2) {
+//			}
 //		}
 
 		try {

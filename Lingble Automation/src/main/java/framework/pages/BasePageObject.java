@@ -235,7 +235,7 @@ public class BasePageObject<T> {
 	}
 	private boolean waitForJStoLoad() {
 
-		WebDriverWait wait = new WebDriverWait(driver, 100);
+		WebDriverWait wait = new WebDriverWait(driver, 500);
 
 		// wait for jQuery to load
 		ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {

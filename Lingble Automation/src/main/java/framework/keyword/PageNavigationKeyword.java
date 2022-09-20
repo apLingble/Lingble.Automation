@@ -30,6 +30,117 @@ public class PageNavigationKeyword extends PageNavigationPage {
         super(driver, log);
     }
 
+    //region -----> Validate Price and Img for each category
+    public void ValidatePriceImgEachCategory(){
+        log.info("Validating price and image for each category...");
+        String partnersite = System.getProperty("partnerSite");
+        if (partnersite.equals("Tatras") | partnersite.equals("haku-clothing") | partnersite.equals("Kokuyo")){
+            TaHaKoCategory();
+        } else if (partnersite.equals("Xlarge") | partnersite.equals("Talex")) {
+            XlargeTalexCategory();
+        } else if (partnersite.equals("ecchiTOKYO")) {
+            ecchiCategory();
+        } else {
+            checkCategory();
+        }
+    }
+
+    private void ecchiCategory(){
+        log.info("Checking Women's Category");
+        click(womenCategory);
+        int categoryWomen = elementCount(ecchiWomenCategory);
+        log.info("Number of Categories: "+categoryWomen);
+        for (int x = 1; x <= categoryWomen; x++) {
+            String Cat = getText(ecchiWomenCategory(x));
+            log.info("Category: "+Cat);
+            click(ecchiWomenCategory(x));
+            validatePriceAndImages();
+            sleep(Duration.ofSeconds(3));
+        }
+        click(menCategory);
+        log.info("Checking Men's Category");
+        int categoryMen = elementCount(ecchiMenCategory);
+        log.info("Number of Categories: "+categoryMen);
+        for (int x = 1; x <= categoryMen; x++) {
+            String Cat = getText(ecchiMenCategory(x));
+            log.info("Category: "+Cat);
+            click(ecchiMenCategory(x));
+            validatePriceAndImages();
+            sleep(Duration.ofSeconds(3));
+        }
+    }
+    private void TaHaKoCategory(){
+        int category = elementCount(tatrasHakuCategory);
+        log.info("Number of Categories: "+category);
+        for (int x = 1; x <= category; x++) {
+            String Cat = getText(tatrasHakuCategory(x));
+            log.info("Category: "+Cat);
+            click(tatrasHakuCategory(x));
+			validatePriceAndImages();
+            sleep(Duration.ofSeconds(3));
+        }
+    }
+    public void XlargeTalexCategory(){
+        int category = elementCount(xlargeCategory);
+        log.info("Number of Categories: "+category);
+        for (int x = 1; x <= category; x++) {
+            String Cat = getText(xlargeCategory(x));
+            log.info("Category: "+Cat);
+            moveTo(xlargeCategory(x));
+            click(xlargeSubCategory(x));
+            validatePriceAndImages();
+            sleep(Duration.ofSeconds(3));
+        }
+    }
+    private void checkCategory(){
+        int category1 = elementCount(countCategory);
+        int category2 = elementCount(countCategory2);
+        int category3 = elementCount(countCategory3);
+        if (category1>=1){
+            selectCategory1();
+        } else if (category2>=1){
+            selectCategory2();
+        } else if (category3>=1) {
+            selectCategory3();
+        }
+    }
+    private void selectCategory3() {
+        int category3 = elementCount(countCategory3);
+        log.info("Number of Categories: "+category3);
+        for (int x = 1; x <= category3; x++) {
+            String Cat = getText(category3(x));
+            log.info("Category: "+Cat);
+            click(category3(x));
+            validatePriceAndImages();
+            sleep(Duration.ofSeconds(3));
+        }
+    }
+    private void selectCategory2() {
+        int category2 = elementCount(countCategory2);
+        log.info("Number of Categories: "+category2);
+        for (int x = 1; x <= category2; x++) {
+            String Cat = getText(category2(x));
+            log.info("Category: "+Cat);
+            click(category2(x));
+            validatePriceAndImages();
+            sleep(Duration.ofSeconds(3));
+        }
+    }
+    private void selectCategory1() {
+        int category1 = elementCount(countCategory);
+        log.info("Number of Categories: "+category1);
+        for (int x = 1; x <= category1; x++) {
+            String Cat = getText(category(x));
+            log.info("Category: "+Cat);
+            click(category(x));
+            validatePriceAndImages();
+            sleep(Duration.ofSeconds(3));
+        }
+    }
+
+    //endregion
+
+
     //region -----> Filtering products
     String colorToFilter = System.getProperty("colorToFilter");
     String brandToFilter= System.getProperty("brandToFilter");
@@ -100,14 +211,13 @@ public class PageNavigationKeyword extends PageNavigationPage {
     }
     private void swans_filter() {
         JavascriptExecutor scroll = (JavascriptExecutor) driver;
-        scroll.executeScript("window.scrollBy(0,200)", "");
-        sleep(Duration.ofSeconds(10));
+        scroll.executeScript("window.scrollBy(0, 700)", "");
         filter_Price_Range();
         filter_PriceRangeValidation();
     }
     private void ecchi_filter() {
         JavascriptExecutor scroll = (JavascriptExecutor) driver;
-        scroll.executeScript("window.scrollBy(0,250)", "");
+        scroll.executeScript("window.scrollBy(0,500)", "");
         filter_Brand();
     }
     private void haku_filter() {
@@ -140,7 +250,11 @@ public class PageNavigationKeyword extends PageNavigationPage {
     }
     private void igc_filter(){ log.info("This site has no filter option."); }
     private void makuake_filter() { log.info("This site has no filter option."); }
-    private void kokuyo_filter() { filter_Price_Slider(); }
+    private void kokuyo_filter() {
+        JavascriptExecutor scroll = (JavascriptExecutor) driver;
+        scroll.executeScript("window.scrollBy(0,500)", "");
+        filter_Price_Slider();
+    }
     private void dnd_filter() { filter_Price_Slider(); }
     private void ace_filter() {
         JavascriptExecutor scroll = (JavascriptExecutor) driver;
@@ -157,7 +271,7 @@ public class PageNavigationKeyword extends PageNavigationPage {
     //----> METHODS FOR FILTERING
     private void filter_Price_Range() {
         moveTo(filter_PriceRange(priceRangeToFilter));
-        click(filter_PriceRange(priceRangeToFilter));
+        clickElementJS(filter_PriceRange(priceRangeToFilter));
         sleep(Duration.ofSeconds(8));
     }
     private void filter_PriceRangeValidation(){
@@ -255,7 +369,7 @@ public class PageNavigationKeyword extends PageNavigationPage {
         //-----> Set color to filter
         waitForElementToBeVisible(filter_ColorOption(colorToFilter), 20);
         moveTo(filter_ColorOption(colorToFilter));
-        click(filter_ColorOption(colorToFilter));
+        clickElementJS(filter_ColorOption(colorToFilter));
         sleep(Duration.ofSeconds(5));
     }
     private void filter_ValidateColor2(){
@@ -282,12 +396,7 @@ public class PageNavigationKeyword extends PageNavigationPage {
         }else {
             log.info(sortOption);
             sortByPrice();
-            if (elementCount(countSale)>=1){
-                log.info("Price Sale found");
-                sortByPriceValidation_Sale();
-            } else {
-                sortByPriceValidation();
-            }
+            sortByPriceValidation();
         }
     }
 
@@ -371,7 +480,7 @@ public class PageNavigationKeyword extends PageNavigationPage {
     public void selectProduct() {
         String productName = System.getProperty("productName");
         moveTo(productName(productName));
-        click(productName(productName));
+        clickElementJS(productName(productName));
         log.info(productName+" is selected.");
     }
     //endregion
@@ -441,7 +550,7 @@ public class PageNavigationKeyword extends PageNavigationPage {
 
     //-----> For validating price contents
     public void validatePriceAndImages() {
-        log.info("Checking price contents if null and images if null...");
+        log.info("Checking price and image contents if null...");
         for (int x = 0; x <= 12; x++) {
             sleep(Duration.ofSeconds(10));
             moveTo(footer);
@@ -454,7 +563,6 @@ public class PageNavigationKeyword extends PageNavigationPage {
             } else {
                 if (elementCount(buttonDisabled) >= 1) {
                     boolean isbuttonDisabled = getAttribute(buttonDisabled, "class").contains("disabled");
-                    log.info(isbuttonDisabled);
                     if (elementCount(loadMore) == 1 && !isbuttonDisabled) {
                         log.info("Passed. Loading more products...");
                         sleep(Duration.ofSeconds(10));
@@ -700,7 +808,8 @@ public class PageNavigationKeyword extends PageNavigationPage {
         sleep(Duration.ofSeconds(3));
         if(getTitle().contains("Instagram")){
             log.info("Instagram link is validated.");
-            driver.navigate().back();
+            HomeKeyword homeKeyword = new HomeKeyword(driver, log);
+            homeKeyword.openPartnerSite();
         }
         else {
             throw new Error("Social Media Site not found.");

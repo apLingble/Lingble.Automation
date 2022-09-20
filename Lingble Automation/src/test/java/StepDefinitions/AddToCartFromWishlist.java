@@ -3,6 +3,7 @@ package StepDefinitions;
 import framework.commonFunctions.commonHelper;
 import framework.environment.BaseStepsDefinitions;
 import framework.keyword.CheckOutKeyword;
+import io.cucumber.core.gherkin.Step;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
@@ -27,8 +28,8 @@ public class AddToCartFromWishlist extends BaseStepsDefinitions {
         TearDown(scenario);
     }
     @AfterStep
-    public void afterStep() throws Throwable {
-        commonHelper.takeScreenshot();
+    public void afterStep(Scenario scenario) throws Throwable {
+        commonHelper.takeScreenshot(scenario);
     }
     @And("Open login account")
     public void openLoginAccount() {

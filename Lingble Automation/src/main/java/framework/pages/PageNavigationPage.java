@@ -15,9 +15,53 @@ public class PageNavigationPage extends BasePageObject<PageNavigationPage>{
         super(driver, log);
     }
 
+    //----> For validating Price and Img for each category
+    public By category(int index){
+        return By.xpath("(//nav//child::ul)[1]/li["+index+"]/a");
+    }
+    public By category2(int index){
+        return By.xpath("(//nav[@id='main-menu']//child::ul)[1]/li[@role='presentation']["+index+"]/a");
+    }
+    public By category3(int index){
+        return By.xpath("//nav/div[2]/div/div/nav/ul/li[@role='presentation']["+index+"]/a" +
+                "| //nav/ul/li["+index+"]/a");
+    }
+    protected By countCategory = By.xpath("(//nav//child::ul)[1]/li[@role='presentation']/a");
+    protected By countCategory2 = By.xpath("(//nav[@id='main-menu']//child::ul)[1]/li[@role='presentation']/a");
+    protected By countCategory3 = By.xpath("//nav[@class='menu-category']/ul/li/a");
+
+    protected By xlargeCategory = By.xpath("//nav//descendant::ul[contains(@class,'nav')]/li/span" +
+            "| (//nav[@role='navigation']//descendant::ul[@class='nav navbar-nav'])[1]/li[starts-with(@class,'nav')]/a");
+    public By xlargeSubCategory(int index){
+        return By.xpath("//nav//descendant::ul[contains(@class,'nav')]/li["+index+"]/span//following::ul/li/a" +
+                "| (//nav[@role='navigation']//descendant::ul[@class='nav navbar-nav'])[1]/li[starts-with(@class,'nav')]["+index+"]/a");
+    }
+    public By xlargeCategory(int index){
+        return By.xpath("//nav//descendant::ul[contains(@class,'nav')]/li["+index+"]/span" +
+                "| (//nav[@role='navigation']//descendant::ul[@class='nav navbar-nav'])[1]/li[starts-with(@class,'nav')]["+index+"]/a");
+    }
+    protected By tatrasHakuCategory = By.xpath("(//nav[@role='navigation']//descendant::ul[@class='nav navbar-nav'])[1]/li[starts-with(@class,'nav')]/a" +
+            "| //nav//descendant::ul[@aria-label='men']/li/a");
+    public By tatrasHakuCategory(int index){
+        return By.xpath("//nav//descendant::ul[@aria-label='men']/li["+index+"]/a" +
+                "| (//nav[@role='navigation']//descendant::ul[@class='nav navbar-nav'])[1]/li[starts-with(@class,'nav')]["+index+"]/a");
+    }
+    protected By ecchiMenCategory = By.xpath("(//nav[contains(@class, 'menu-men')]//child::ul[@class='nav navbar-nav'])[1]/li[@role='presentation']/a");
+    public By ecchiMenCategory(int index){
+        return By.xpath("(//nav[contains(@class, 'menu-men')]//child::ul[@class='nav navbar-nav'])[1]/li[@role='presentation']["+index+"]/a");
+    }
+    protected By womenCategory = By.xpath("//li/a[@id='women']");
+    protected By menCategory = By.xpath("//li/a[@id='men']");
+    protected By ecchiWomenCategory = By.xpath("(//nav[contains(@class, 'menu-women')]//child::ul[@class='nav navbar-nav'])[1]/li[@role='presentation']/a");
+    public By ecchiWomenCategory(int index){
+        return By.xpath("(//nav[contains(@class, 'menu-women')]//child::ul[@class='nav navbar-nav'])[1]/li[@role='presentation']["+index+"]/a");
+    }
+    
+    
+
     //-----> For selecting an item from product list page
     public By productName (String productName){
-        return By.xpath("//a[@class='link' and contains(text(),\""+productName+"\")] | //a[contains(text(), \""+productName+"\")] | //h5[contains(text(),\""+productName+"\")]");
+        return By.xpath("//img[contains(@alt, \""+productName+"\")] | //a[@class='link' and contains(text(),\""+productName+"\")] | //a[contains(text(), \""+productName+"\")] | //h5[contains(text(),\""+productName+"\")]");
     }
 
     //-----> FOR NAVIGATING THROUGH PRODUCT CATEGORY

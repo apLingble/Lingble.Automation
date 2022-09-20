@@ -56,31 +56,31 @@ public class CheckOutKeyword extends CheckOutPage {
         log.info(countryCode+"_paymentMethod");
         log.info(countryCode);
         String paymentMethod = paymentType.length()!=0 || paymentType!=null?mapPayType(paymentType):mapPayType(System.getProperty(countryCode+"_paymentMethod"));
-        String creditCardNumber = System.getProperty(countryCode+"_creditCardNumber");
 
-        waitForWebElementToBeClickAble(loc_billingEmail, 25);
-        clear(loc_billingEmail);
-        type(userBillingEmail, loc_billingEmail);
-        waitForPresenceOfText(loc_billingEmail, userBillingEmail, 5);
-        log.info(userBillingEmail);
-        log.info(paymentMethod);
+        billing_email_address();
         paymentMethod(paymentMethod,countryCode);
     }
     public String mapPayType(String paymentType){
         log.info("MAP_PAY_TYPE");
         Map<String, String> paymentMap = new HashMap<>();
-        paymentMap.put("amex/diners/discover","AMEX/DINERS/DISCOVER");
-        paymentMap.put("visa/master","VISA/MASTER");
+        paymentMap.put("amex","AMEX");
+        paymentMap.put("visa","VISA");
+        paymentMap.put("master","MASTER");
         paymentMap.put("jcb","JCB");
+        paymentMap.put("diners","DINERS");
+        paymentMap.put("discover","DISCOVER");
         paymentMap.put("paypal","PayPal");
         return paymentMap.get(paymentType.toLowerCase());
     }
     public void paymentMethod(String paymentType,String countryCode){
-        log.info("PAYMEMT_METHOD");
+        log.info("Selected payment method type " + paymentType);
         Map<String, Runnable> paymentMap = new HashMap<>();
-        paymentMap.put("amex/diners/discover",()->creditCard(paymentType,countryCode));
-        paymentMap.put("visa/master",()->creditCard(paymentType,countryCode));
+        paymentMap.put("amex",()->creditCard(paymentType,countryCode));
+        paymentMap.put("visa",()->creditCard(paymentType,countryCode));
+        paymentMap.put("master",()->creditCard(paymentType,countryCode));
         paymentMap.put("jcb",()->creditCard(paymentType,countryCode));
+        paymentMap.put("diners",()->creditCard(paymentType,countryCode));
+        paymentMap.put("discover",()->creditCard(paymentType,countryCode));
         paymentMap.put("paypal",()->paypal());
         paymentMap.get(paymentType.toLowerCase()).run();
     }
@@ -92,84 +92,39 @@ public class CheckOutKeyword extends CheckOutPage {
         String creditCard_zipcode = System.getProperty("creditCardZipCode");
         String creditCard_expiryDate = System.getProperty("creditCardExpiryDate");
 
-        log.info("Selected payment method: CREDIT CARD");
+        log.info("Selected payment method: CREDIT CARD (Adyen)");
         switch (paymentMethod){
-            case "AMEX/DINERS/DISCOVER":
-                waitForWebElementToBeClickAble(loc_amexDinnersDiscover_radio_button, 25);
-                scrollToElement(loc_amexDinnersDiscover_radio_button);
-                waitForWebElementToBeClickAble(loc_amexDinnersDiscover_radio_button, 5);
-                clickElementJS(loc_amexDinnersDiscover_radio_button);
+            case "AMEX":
+                waitUntilPageready();
+                scrollToElement(loc_amex_radio_button);
+                selectRadioButton(loc_amex_radio_button);
                 break;
-            case "VISA/MASTER":
-                waitForWebElementToBeClickAble(loc_visaMaster_radio_button, 25);
-                scrollToElement(loc_visaMaster_radio_button);
-                waitForWebElementToBeClickAble(loc_visaMaster_radio_button, 5);
-                clickElementJS(loc_visaMaster_radio_button);
+            case "MASTER":
+            case "VISA":
+                waitUntilPageready();
+                scrollToElement(loc_visa_OR_master_radio_button);
+                selectRadioButton(loc_visa_OR_master_radio_button);
                 break;
             case "JCB":
-                waitForWebElementToBeClickAble(loc_jcb_radio_button, 25);
-                scrollToElement(loc_jcb_radio_button);
-                waitForWebElementToBeClickAble(loc_jcb_radio_button, 5);
-                clickElementJS(loc_jcb_radio_button);
+            case "DINERS":
+            case "DISCOVER":
+                waitUntilPageready();
+                scrollToElement(loc_jcb_OR_diner_OR_discover_radio_button);
+                selectRadioButton(loc_jcb_OR_diner_OR_discover_radio_button);
                 break;
         }
         switch (paymentMethod) {
-            case "AMEX/DINERS/DISCOVER":
-                log.info(paymentMethod);
-                log.info("Stripe Payment");
-                log.info("AMEX/DINERS/DISCOVER");
-
-                log.info("CC card");
-                switchToIframe(loc_AMEX_iframe_creditWithZipcode);
-                waitForWebElementToBeClickAble(loc_AMEX_CreditCardNumber, 3);
-                type(creditCard_number, loc_AMEX_CreditCardNumber);
-                log.info("CC ex. date");
-                waitForWebElementToBeClickAble(loc_AMEX_CreditExpiryDate, 3);
-                type(creditCard_expiryDate, loc_AMEX_CreditExpiryDate);
-
-                log.info("CC cvc");
-                waitForWebElementToBeClickAble(loc_AMEX_CreditCVC_CVV, 3);
-                type(creditCard_CVC_CVV, loc_AMEX_CreditCVC_CVV);
-                log.info("CC zipcode");
-                waitForWebElementToBeClickAble(loc_AMEX_CreditZipcode, 3);
-                type(creditCard_zipcode, loc_AMEX_CreditZipcode);
-
-                switchToDefaultFrame();
-                sleep(Duration.ofSeconds(2));
+            case "AMEX":
+                paymentMethod_amex(paymentMethod, countryCode);
                 break;
-            case "VISA/MASTER":
-                log.info("ADYEN PAYMENT | VISA/MASTER");
-                switchToIframe(loc_VISA_MASTER_iframe_creditCardtextbox);
-                waitForWebElementToBeClickAble(loc_VISA_MASTER_CreditCardNumber, 3);
-                type(visa_master_creditCard_number, loc_VISA_MASTER_CreditCardNumber);
-                switchToDefaultFrame();
-
-                switchToIframe(loc_VISA_MASTER_iframe_expiryDate);
-                waitForWebElementToBeClickAble(loc_VISA_MASTER_CreditExpiryDate, 3);
-                type(System.getProperty("creditCardExpiryDate"), loc_VISA_MASTER_CreditExpiryDate);
-                switchToDefaultFrame();
-
-                switchToIframe(loc_VISA_MASTER_iframe_CVC_CVV);
-                waitForWebElementToBeClickAble(loc_VISA_MASTER_CreditCVC_CVV, 3);
-                type(System.getProperty("CVC_CVV"), loc_VISA_MASTER_CreditCVC_CVV);
-                switchToDefaultFrame();
+            case "VISA":
+            case "MASTER":
+                paymentMethod_visa_or_master(paymentMethod, countryCode);
                 break;
             case "JCB":
-                log.info("ADYEN PAYMENT | JCB");
-                switchToIframe(loc_JCB_iframe_creditCardtextbox);
-                waitForWebElementToBeClickAble(loc_JCB_CreditCardNumber, 3);
-                type(creditCard_number, loc_JCB_CreditCardNumber);
-                switchToDefaultFrame();
-
-                switchToIframe(loc_JCB_iframe_expiryDate);
-                waitForWebElementToBeClickAble(loc_JCB_CreditExpiryDate, 3);
-                type(System.getProperty("creditCardExpiryDate"), loc_JCB_CreditExpiryDate);
-                switchToDefaultFrame();
-
-                switchToIframe(loc_JCB_iframe_CVC_CVV);
-                waitForWebElementToBeClickAble(loc_JCB_CreditCVC_CVV, 3);
-                type(System.getProperty("CVC_CVV"), loc_JCB_CreditCVC_CVV);
-                switchToDefaultFrame();
+            case "DINERS":
+            case "DISCOVER":
+                paymentMethod_jcb_or_diners_or_diccover(paymentMethod, countryCode);
                 break;
             default:
                 break;
@@ -178,6 +133,7 @@ public class CheckOutKeyword extends CheckOutPage {
         place_orderButton();
     }
 
+    //PAYMENT METHODS LIST
     private void paypal(){
         waitUntilPageready();
         waitForWebElementToBeClickAble(paypalRadioButton, 25);
@@ -251,9 +207,90 @@ public class CheckOutKeyword extends CheckOutPage {
         log.info("Paypal payment was successful.");
     }
 
+    public void paymentMethod_amex(String paymentMethod,String countryCode){
+        String creditCard_number = System.getProperty(countryCode+"_creditCardNumber");
+        String creditCard_CVC_CVV = System.getProperty(countryCode+"_CVC");
+        String creditCard_zipcode = System.getProperty("creditCardZipCode");
+        String creditCard_expiryDate = System.getProperty("creditCardExpiryDate");
+        log.info("Enter " +paymentMethod+ " Card details");
+        sleep(Duration.ofSeconds(5));
+        waitUntilPageready();
+        switchToIframe(loc_AMEX_iframe_creditWithZipcode);
+        waitForWebElementToBeClickAble(loc_AMEX_CreditCardNumber, 3);
+        type(creditCard_number, loc_AMEX_CreditCardNumber);
+        log.info("Card number: " + creditCard_number + " Entered!");
+
+        waitForWebElementToBeClickAble(loc_AMEX_CreditExpiryDate, 3);
+        type(creditCard_expiryDate, loc_AMEX_CreditExpiryDate);
+        log.info("Credit card expriration date: " + creditCard_expiryDate + " Entered!");
+
+        waitForWebElementToBeClickAble(loc_AMEX_CreditCVC_CVV, 3);
+        type(creditCard_CVC_CVV, loc_AMEX_CreditCVC_CVV);
+        log.info("Credit card cvc: " + creditCard_CVC_CVV + " Entered!");
+
+        waitForWebElementToBeClickAble(loc_AMEX_CreditZipcode, 3);
+        type(creditCard_zipcode, loc_AMEX_CreditZipcode);
+        log.info("Credit card zipcode: " + creditCard_zipcode + " Entered!");
+
+
+        switchToDefaultFrame();
+        sleep(Duration.ofSeconds(2));
+    }
+
+    public void paymentMethod_visa_or_master(String paymentMethod,String countryCode){
+        String visa_master_creditCard_number = System.getProperty(countryCode+"_creditCardNumber2");
+        String creditCard_CVC_CVV = System.getProperty(countryCode+"_CVC");
+        String creditCard_expiryDate = System.getProperty("creditCardExpiryDate");
+        log.info("Enter " +paymentMethod+ " Card details");
+
+        switchToIframe(loc_VISA_MASTER_iframe_creditCardtextbox);
+        waitForWebElementToBeClickAble(loc_VISA_MASTER_CreditCardNumber, 3);
+        type(visa_master_creditCard_number, loc_VISA_MASTER_CreditCardNumber);
+        switchToDefaultFrame();
+        log.info("Card number: " + visa_master_creditCard_number + " Entered!");
+
+        switchToIframe(loc_VISA_MASTER_iframe_expiryDate);
+        waitForWebElementToBeClickAble(loc_VISA_MASTER_CreditExpiryDate, 3);
+        type(creditCard_expiryDate, loc_VISA_MASTER_CreditExpiryDate);
+        switchToDefaultFrame();
+        log.info("Card number: " + creditCard_expiryDate + " Entered!");
+
+        switchToIframe(loc_VISA_MASTER_iframe_CVC_CVV);
+        waitForWebElementToBeClickAble(loc_VISA_MASTER_CreditCVC_CVV, 3);
+        type(creditCard_CVC_CVV, loc_VISA_MASTER_CreditCVC_CVV);
+        switchToDefaultFrame();
+        log.info("Card number: " + creditCard_CVC_CVV + " Entered!");
+    }
+
+    public void paymentMethod_jcb_or_diners_or_diccover(String paymentMethod,String countryCode){
+        String creditCard_number = System.getProperty(countryCode+"_creditCardNumber");
+        String creditCard_CVC_CVV = System.getProperty(countryCode+"_CVC");
+        String creditCard_expiryDate = System.getProperty("creditCardExpiryDate");
+        log.info("Enter " +paymentMethod+ " Card details");
+
+        switchToIframe(loc_JCB_iframe_creditCardtextbox);
+        waitForWebElementToBeClickAble(loc_JCB_CreditCardNumber, 3);
+        type(creditCard_number, loc_JCB_CreditCardNumber);
+        switchToDefaultFrame();
+        log.info("Card number: " + creditCard_number + " Entered!");
+
+        switchToIframe(loc_JCB_iframe_expiryDate);
+        waitForWebElementToBeClickAble(loc_JCB_CreditExpiryDate, 3);
+        type(creditCard_expiryDate, loc_JCB_CreditExpiryDate);
+        switchToDefaultFrame();
+        log.info("Card number: " + creditCard_expiryDate + " Entered!");
+
+        switchToIframe(loc_JCB_iframe_CVC_CVV);
+        waitForWebElementToBeClickAble(loc_JCB_CreditCVC_CVV, 3);
+        type(creditCard_CVC_CVV, loc_JCB_CreditCVC_CVV);
+        switchToDefaultFrame();
+        log.info("Card number: " + creditCard_CVC_CVV + " Entered!");
+    }
+    //END
+
     public void validateOrderReceipt() {
         waitUntilPageready();
-        waitForElementToBeVisible(OR_ThankYouText, 30);
+        waitForElementToBeVisible(OR_ThankYouText, 40);
         if(elementCount(OR_ThankYouText) == 1){
             log.info("Thank you for your order Heading is VISIBLE");
         }else{
@@ -268,7 +305,9 @@ public class CheckOutKeyword extends CheckOutPage {
     }
 
     public String get_orderNumber(){
-        return getText(OR_OrderNumber);
+        String ordeNumber = getText(OR_OrderNumber);
+        log.info("The order "+ordeNumber+" was successfully created.");
+        return ordeNumber;
     }
 
     public void enterLoginAccount(String country_code){
@@ -294,8 +333,8 @@ public class CheckOutKeyword extends CheckOutPage {
     }
 
     public void next_payment_button(){
-        waitUntilPageready();
-        waitForWebElementToBeClickAble(loc_nextPaymentButton, 25);
+//        waitUntilPageready();
+        waitForWebElementToBeClickAble(loc_nextPaymentButton, 30);
         if (elementCount(ageCheck) > 0){
             age_check();
         }
@@ -434,10 +473,11 @@ public class CheckOutKeyword extends CheckOutPage {
         String country = System.getProperty(countryCode+"_country");
         selectValue(loc_countryDropDown, country);
         log.info(country + " selected");
+        sleep(Duration.ofSeconds(5));
+        waitUntilPageready();
     }
     public void select_state(String countryCode){
         String state = System.getProperty(countryCode+"_state");
-
         waitForElementToBeVisible(loc_stateDropDown, 30);
         selectValue(loc_stateDropDown, state);
         log.info(state + " selected");
@@ -478,6 +518,14 @@ public class CheckOutKeyword extends CheckOutPage {
         clear(loc_phoneNumber);
         type(number, loc_phoneNumber);
     }
+    public void billing_email_address(){
+        sleep(Duration.ofSeconds(3));
+        log.info("Enter billing email address");
+        String userBillingEmail = System.getProperty("userBillingEmail");
+        clear(loc_billingEmail);
+        type(userBillingEmail, loc_billingEmail);
+        log.info("Email address: " +userBillingEmail+ " Entered");
+    }
     public void age_check(){
         moveTo(loc_nextPaymentButton);
         waitForWebElementToBeClickAble(ageCheck, 5);
@@ -503,6 +551,7 @@ public class CheckOutKeyword extends CheckOutPage {
         click(loc_loginButton);
     }
     public void next_placeOrder(){
+        sleep(Duration.ofSeconds(5));
         try {
             for (int x = 0; x < 5; x++) {
                 waitForWebElementToBeClickAble(loc_nextPlaceOrder, 25);
@@ -518,8 +567,8 @@ public class CheckOutKeyword extends CheckOutPage {
         }
     }
     public void place_orderButton(){
-        waitUntilPageready();
-        waitForWebElementToBeClickAble(placeOrderButton, 25);
+//        waitUntilPageready();
+        waitForWebElementToBeClickAble(placeOrderButton, 30);
         moveTo(placeOrderButton);
         click(placeOrderButton);
         log.info("Place order button cliked.");

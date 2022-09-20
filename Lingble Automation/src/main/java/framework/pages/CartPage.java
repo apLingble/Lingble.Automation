@@ -16,6 +16,32 @@ public class CartPage extends BasePageObject<CartPage>{
 
     //FOR MINI CART / POP-UP CART PAGE
 
+    //MAGENTO
+    protected By cartMagento = By.xpath("//i[@class='ionicons-cart']");
+    protected By viewCartMagento = By.xpath("//i[@class='meigee-cart']");
+    protected By removeIconMagento = By.xpath("//a[@class='action action-delete']//following-sibling::i[@class='meigee-close']" +
+            "| //button[@class='ajaxcart__qty-remove icon-fallback-text']" +
+            "| //a[@class='action delete']");
+    protected By validateEmptyCartMagento = By.xpath("//p[contains(text(),'no items')] | //span[contains(text(),'no items')] | //p[contains(text(),'empty')]");
+    protected By loc_validate_updated_qty(String UpdateProductQuantity){
+        return By.xpath("//input[@value='"+UpdateProductQuantity+"']");
+    }
+    protected By loc_edit_productColor_magento (String UpdateProductColor){
+        return By.xpath("//div[@option-label='"+UpdateProductColor+"']");
+    }
+    protected By loc_edit_productSize_magento (String UpdateProductSize){
+        return By.xpath("//button[@title='Select "+UpdateProductSize+"'] |" +
+                "//div[@aria-label='"+UpdateProductSize+"'] |" +
+                "//div[@class='swatch-option text' and @aria-label='"+UpdateProductSize+"']");
+    }
+    protected By colorSelected = By.xpath("//div[@class='swatch-option image selected']");
+
+
+    protected By loc_edit_quantity_magento = By.xpath("//input[@class='input-text qty cart-qty'] | //input[@title='Qty']");
+    protected By loc_update_button_magento = By.xpath("//button[@id='product-updatecart-button' and @type='submit'] | //button[@value='update_qty' and @type='submit']");
+    protected By loc_editIcon_magento_magento = By.xpath("//i[@class='meigee-pencil']");
+    protected By loc_minicart_magento = By.xpath("//i[@class='ionicons-cart']");
+    protected By loc_viewCart_magento = By.xpath("//i[@class='meigee-cart']");
     //LOCATORS LIST FOR VALIDATE PRICE ON MINICART
     protected By get_cartItemsCount = By.xpath("//div[@class='product-summary']//div[@class='row']");
     protected By get_salePriceCount = By.xpath("//span[@class='sales']//ancestor::div[contains(@class, 'minicart')]");

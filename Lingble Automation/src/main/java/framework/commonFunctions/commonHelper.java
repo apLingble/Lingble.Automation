@@ -1,6 +1,8 @@
 package framework.commonFunctions;
 
 import framework.environment.BaseTestCase;
+import io.cucumber.core.gherkin.Step;
+import io.cucumber.java.Scenario;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -22,20 +24,18 @@ import java.util.Date;
 
 public class commonHelper {
     private static Calendar calendar = Calendar.getInstance();
-    private static SimpleDateFormat formater = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
-    private static SimpleDateFormat scformat = new SimpleDateFormat("_MM_dd_yyyy");
+    private static SimpleDateFormat formater = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss_SSS");
+    private static SimpleDateFormat scformat = new SimpleDateFormat("_MM_dd_yyyy_hh_mm");
     protected static String reportDirectory;
 
-    public static void takeScreenshot() {
-        if(reportDirectory==null){
-             reportDirectory= new File(System.getProperty("user.dir")).getAbsolutePath()
-                    + "/target/surefire-reports/steps_screenshots/steps_screenshots_of" + scformat.format(calendar.getTime());
-        }
+    public static void takeScreenshot(Scenario scenario) {
+        reportDirectory = new File(System.getProperty("user.dir")).getAbsolutePath()
+                + "/target/surefire-reports/steps_screenshots/" + scenario.getName() + "_" + scformat.format(calendar.getTime());
         WebDriver driver = BaseTestCase.getDriver();
         Path directory = Paths.get(reportDirectory);
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
-            File destFile = new File((String) reportDirectory + "/" + formater.format(calendar.getTime()) + ".png");
+            File destFile = new File((String) reportDirectory + "/"+scenario.getName()+""+ formater.format(calendar.getTime()) + ".png");
             FileUtils.copyFile(scrFile, destFile);
             String filePath = destFile.toString();
             String path = "<img src=\"" + filePath + "\" height='800' width='1200' alt=\"\"\"/\" / >";
